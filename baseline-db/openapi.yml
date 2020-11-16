@@ -1,0 +1,970 @@
+openapi: 3.0.0
+info:
+  title: merkle-tree
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:9000
+  variables: {}
+paths:
+  /leaf:
+    post:
+      tags:
+      - leaf
+      summary: /leaf -> inserts a leaf object
+      description: inserts a leaf object
+      operationId: /leaf->insertsaleafobject
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1leaf-%3Einsertsaleafobjectrequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              leaf:
+                value: 0xabc123-7
+                leafIndex: 2
+                blockNumber: 60000000
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaves:
+    post:
+      tags:
+      - leaf
+      summary: /leaves -> inserts many leaf objects
+      description: >-
+        {
+        		"value": "0xabc123-0",
+        		"leafIndex": 0,
+        		"blockNumber": 60000000
+        	},
+        	{
+        		"value": "0xabc123-2",
+        		"leafIndex": 2,
+        		"blockNumber": 60000003
+        	},
+        	{
+        		"value": "0xabc123-3",
+        		"leafIndex": 3,
+        		"blockNumber": 60000000
+        	},
+        		{
+        		"value": "0xabc123-2",
+        		"leafIndex": 7,
+        		"blockNumber": 60000003
+        	},
+        	{
+        		"value": "0xabc123-3",
+        		"leafIndex": 8,
+        		"blockNumber": 60000000
+        	},
+      operationId: /leaves->insertsmanyleafobjects
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1leaves-%3Einsertsmanyleafobjectsrequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              leaves:
+              - value: 0xabc123-3
+                leafIndex: 1
+                blockNumber: 60000000
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - leaf
+      summary: /leaves -> get leaves by array of indices
+      operationId: /leaves->getleavesbyarrayofindices
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaf/index/100:
+    get:
+      tags:
+      - leaf
+      summary: /leaf/:leafIndex -> gets a leaf at leafIndex
+      operationId: /leaf/:leafIndex->getsaleafatleafIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaf/index:
+    get:
+      tags:
+      - leaf
+      summary: /leaf/index -> gets a leaf at leafIndex
+      operationId: /leaf/index->getsaleafatleafIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaf/value:
+    get:
+      tags:
+      - leaf
+      summary: /leaf/value -> gets a leaf with a given value
+      operationId: /leaf/value->getsaleafwithagivenvalue
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaves/check:
+    get:
+      tags:
+      - leaf
+      summary: /leaves/check -> check for missing leaves
+      operationId: /leaves/check->checkformissingleaves
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /leaves/count:
+    get:
+      tags:
+      - leaf
+      summary: /leaves/count -> count the number of leaves in the db
+      operationId: /leaves/count->countthenumberofleavesinthedb
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /node:
+    post:
+      tags:
+      - node
+      summary: /node -> inserts a node object
+      description: inserts a node object
+      operationId: /node->insertsanodeobject
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1node-%3Einsertsanodeobjectrequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              node:
+                value: 0xabc123-0
+                nodeIndex: 0
+                isLocked: false
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /nodes:
+    patch:
+      tags:
+      - node
+      summary: /nodes -> updates many node objects
+      description: inserts a leaf object
+      operationId: /nodes->updatesmanynodeobjects
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1nodes-%3Eupdatesmanynodeobjectsrequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              nodes:
+              - value: 0xabc123-0
+                nodeIndex: 0
+              - value: 0xabc123-1
+                nodeIndex: 1
+              - value: 0xabc123-2
+                nodeIndex: 2
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - node
+      summary: /nodes -> get nodes by array of indices
+      operationId: /nodes->getnodesbyarrayofindices
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /node/index/0:
+    get:
+      tags:
+      - node
+      summary: /node/:nodeIndex -> gets a node at nodeIndex
+      operationId: /node/:nodeIndex->getsanodeatnodeIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /node/index/1:
+    patch:
+      tags:
+      - node
+      summary: /node/:nodeIndex -> updates a node at nodeIndex
+      operationId: /node/:nodeIndex->updatesanodeatnodeIndex
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1node~1%3AnodeIndex-%3EupdatesanodeatnodeIndexRequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              node:
+                value: 0x1234
+                nodeIndex: 6
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /node/index:
+    get:
+      tags:
+      - node
+      summary: /node/index -> gets a node at nodeIndex
+      operationId: /node/index->getsanodeatnodeIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /node/value:
+    get:
+      tags:
+      - node
+      summary: /node/value -> gets a node with a given value
+      operationId: /node/value->getsanodewithagivenvalue
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /nodes/count:
+    get:
+      tags:
+      - node
+      summary: /nodes/count -> count the number of nodes in the db
+      operationId: /nodes/count->countthenumberofnodesinthedb
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata/contractAddress:
+    post:
+      tags:
+      - metaData
+      summary: /metadata/contractAddress -> inserts the contract address of the tree
+      description: inserts a node object
+      operationId: /metadata/contractAddress->insertsthecontractaddressofthetree
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1metadata~1contractAddress-%3EinsertsthecontractaddressofthetreeRequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              contractAddress: 0xabc123-0
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - metaData
+      summary: /metadata/contractAddress -> gets the contractAddress
+      description: inserts a leaf object
+      operationId: /metadata/contractAddress->getsthecontractAddress
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata/contractInterface:
+    post:
+      tags:
+      - metaData
+      summary: /metadata/contractInterface -> inserts the contract address of the tree
+      description: inserts a node object
+      operationId: /metadata/contractInterface->insertsthecontractaddressofthetree
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: string
+              example: >-
+                {
+                	"contractName": "MerkleTreeControllerSHA",
+                	"contractInterface": "{ "pretend": "this is a stringified json interface" }"
+                }
+            example: >-
+              {
+              	"contractName": "MerkleTreeControllerSHA",
+              	"contractInterface": "{ "pretend": "this is a stringified json interface" }"
+              }
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - metaData
+      summary: /metadata/contractInterface -> gets the contractInterface
+      description: inserts a leaf object
+      operationId: /metadata/contractInterface->getsthecontractInterface
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata/treeHeight:
+    post:
+      tags:
+      - metaData
+      summary: /metadata/treeHeight -> establishes the treeHeight for a db
+      description: inserts a node object
+      operationId: /metadata/treeHeight->establishesthetreeHeightforadb
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1metadata~1treeHeight-%3EestablishesthetreeHeightforadbRequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+              treeHeight: 22
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata:
+    get:
+      tags:
+      - metaData
+      summary: /metadata -> gets the tree's metadata object
+      operationId: /metadata->getsthetree'smetadataobject
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata/latestLeaf:
+    patch:
+      tags:
+      - metaData
+      summary: /metadata/latestLeaf -> updates the latestLeaf metadata object
+      description: inserts a leaf object
+      operationId: /metadata/latestLeaf->updatesthelatestLeafmetadataobject
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1metadata~1latestLeaf-%3EupdatesthelatestLeafmetadataobjectRequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - metaData
+      summary: /metadata/latestLeaf -> get the latestLeaf metadata object
+      description: inserts a leaf object
+      operationId: /metadata/latestLeaf->getthelatestLeafmetadataobject
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /metadata/latestRecalculation:
+    patch:
+      tags:
+      - metaData
+      summary: /metadata/latestRecalculation -> updates the latestRecalculation metadata object
+      description: inserts a leaf object
+      operationId: /metadata/latestRecalculation->updatesthelatestRecalculationmetadataobject
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1metadata~1latestRecalculation-%3EupdatesthelatestRecalculationmetadataobjectRequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - metaData
+      summary: /metadata/latestRecalculation -> gets the latestRecalculation metadata object
+      description: inserts a leaf object
+      operationId: /metadata/latestRecalculation->getsthelatestRecalculationmetadataobject
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /start:
+    post:
+      tags:
+      - merkle-tree
+      summary: /start -> starts the event filter
+      description: inserts a node object
+      operationId: /start->startstheeventfilter
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1start-%3Estartstheeventfilterrequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /siblingPath/2:
+    get:
+      tags:
+      - merkle-tree
+      summary: /siblingPath/:leafIndex -> gets a siblingPath array for leafIndex
+      operationId: /siblingPath/:leafIndex->getsasiblingPatharrayforleafIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /path/2:
+    get:
+      tags:
+      - merkle-tree
+      summary: /path/:leafIndex -> gets a path array for leafIndex
+      operationId: /path/:leafIndex->getsapatharrayforleafIndex
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /update:
+    patch:
+      tags:
+      - merkle-tree
+      summary: /update -> updates the merkle tree
+      operationId: /update->updatesthemerkletree
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/~1update-%3Eupdatesthemerkletreerequest'
+            example:
+              contractName: MerkleTreeControllerSHA
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    /leaf->insertsaleafobjectrequest:
+      title: /leaf->insertsaleafobjectrequest
+      required:
+      - contractName
+      - leaf
+      type: object
+      properties:
+        contractName:
+          type: string
+        leaf:
+          $ref: '#/components/schemas/Leaf'
+      example:
+        contractName: MerkleTreeControllerSHA
+        leaf:
+          value: 0xabc123-7
+          leafIndex: 2
+          blockNumber: 60000000
+    Leaf:
+      title: Leaf
+      required:
+      - value
+      - leafIndex
+      - blockNumber
+      type: object
+      properties:
+        value:
+          type: string
+        leafIndex:
+          type: integer
+          format: int32
+        blockNumber:
+          type: integer
+          format: int32
+      example:
+        value: 0xabc123-7
+        leafIndex: 2
+        blockNumber: 60000000
+    /leaves->insertsmanyleafobjectsrequest:
+      title: /leaves->insertsmanyleafobjectsrequest
+      required:
+      - contractName
+      - leaves
+      type: object
+      properties:
+        contractName:
+          type: string
+        leaves:
+          type: array
+          items:
+            $ref: '#/components/schemas/Leaf'
+          description: ''
+      example:
+        contractName: MerkleTreeControllerSHA
+        leaves:
+        - value: 0xabc123-3
+          leafIndex: 1
+          blockNumber: 60000000
+    /node->insertsanodeobjectrequest:
+      title: /node->insertsanodeobjectrequest
+      required:
+      - contractName
+      - node
+      type: object
+      properties:
+        contractName:
+          type: string
+        node:
+          $ref: '#/components/schemas/Node'
+      example:
+        contractName: MerkleTreeControllerSHA
+        node:
+          value: 0xabc123-0
+          nodeIndex: 0
+          isLocked: false
+    Node:
+      title: Node
+      required:
+      - value
+      - nodeIndex
+      - isLocked
+      type: object
+      properties:
+        value:
+          type: string
+        nodeIndex:
+          type: string
+        isLocked:
+          type: boolean
+      example:
+        value: 0xabc123-0
+        nodeIndex: 0
+        isLocked: false
+    /nodes->updatesmanynodeobjectsrequest:
+      title: /nodes->updatesmanynodeobjectsrequest
+      required:
+      - contractName
+      - nodes
+      type: object
+      properties:
+        contractName:
+          type: string
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node1'
+          description: ''
+      example:
+        contractName: MerkleTreeControllerSHA
+        nodes:
+        - value: 0xabc123-0
+          nodeIndex: 0
+        - value: 0xabc123-1
+          nodeIndex: 1
+        - value: 0xabc123-2
+          nodeIndex: 2
+    Node1:
+      title: Node1
+      required:
+      - value
+      - nodeIndex
+      type: object
+      properties:
+        value:
+          type: string
+        nodeIndex:
+          type: string
+      example:
+        value: 0xabc123-0
+        nodeIndex: 0
+    /node/:nodeIndex->updatesanodeatnodeIndexRequest:
+      title: /node/:nodeIndex->updatesanodeatnodeIndexRequest
+      required:
+      - contractName
+      - node
+      type: object
+      properties:
+        contractName:
+          type: string
+        node:
+          $ref: '#/components/schemas/Node2'
+      example:
+        contractName: MerkleTreeControllerSHA
+        node:
+          value: 0x1234
+          nodeIndex: 6
+    Node2:
+      title: Node2
+      required:
+      - value
+      - nodeIndex
+      type: object
+      properties:
+        value:
+          type: string
+        nodeIndex:
+          type: integer
+          format: int32
+      example:
+        value: 0x1234
+        nodeIndex: 6
+    /node/:nodeIndex->updatesanodeatnodeIndexfortreeIdRequest:
+      title: /node/:nodeIndex->updatesanodeatnodeIndexfortreeIdRequest
+      required:
+      - contractName
+      - treeId
+      - node
+      type: object
+      properties:
+        contractName:
+          type: string
+        treeId:
+          type: string
+        node:
+          $ref: '#/components/schemas/Node2'
+      example:
+        contractName: MultipleMerkleTreesControllerSHA
+        treeId: a
+        node:
+          value: 0x1234
+          nodeIndex: 6
+    /metadata/contractAddress->insertsthecontractaddressofthetreeRequest:
+      title: /metadata/contractAddress->insertsthecontractaddressofthetreeRequest
+      required:
+      - contractName
+      - contractAddress
+      type: object
+      properties:
+        contractName:
+          type: string
+        contractAddress:
+          type: string
+      example:
+        contractName: MerkleTreeControllerSHA
+        contractAddress: 0xabc123-0
+    /metadata/treeHeight->establishesthetreeHeightforadbRequest:
+      title: /metadata/treeHeight->establishesthetreeHeightforadbRequest
+      required:
+      - contractName
+      - treeHeight
+      type: object
+      properties:
+        contractName:
+          type: string
+        treeHeight:
+          type: integer
+          format: int32
+      example:
+        contractName: MerkleTreeControllerSHA
+        treeHeight: 22
+    /metadata/latestLeaf->updatesthelatestLeafmetadataobjectRequest:
+      title: /metadata/latestLeaf->updatesthelatestLeafmetadataobjectRequest
+      required:
+      - contractName
+      type: object
+      properties:
+        contractName:
+          type: string
+      example:
+        contractName: MerkleTreeControllerSHA
+    /metadata/latestRecalculation->updatesthelatestRecalculationmetadataobjectRequest:
+      title: /metadata/latestRecalculation->updatesthelatestRecalculationmetadataobjectRequest
+      required:
+      - contractName
+      type: object
+      properties:
+        contractName:
+          type: string
+      example:
+        contractName: MerkleTreeControllerSHA
+    /start->startstheeventfilterrequest:
+      title: /start->startstheeventfilterrequest
+      required:
+      - contractName
+      type: object
+      properties:
+        contractName:
+          type: string
+      example:
+        contractName: MerkleTreeControllerSHA
+    /start->startstheeventfilterforatreeIdRequest:
+      title: /start->startstheeventfilterforatreeIdRequest
+      required:
+      - contractName
+      - treeId
+      type: object
+      properties:
+        contractName:
+          type: string
+        treeId:
+          type: string
+      example:
+        contractName: MultipleMerkleTreesControllerSHA
+        treeId: a
+    /update->updatesthemerkletreerequest:
+      title: /update->updatesthemerkletreerequest
+      required:
+      - contractName
+      type: object
+      properties:
+        contractName:
+          type: string
+      example:
+        contractName: MerkleTreeControllerSHA
+    /update->updatesthemerkletreeforatreeIdRequest:
+      title: /update->updatesthemerkletreeforatreeIdRequest
+      required:
+      - contractName
+      - treeId
+      type: object
+      properties:
+        contractName:
+          type: string
+        treeId:
+          type: string
+      example:
+        contractName: MultipleMerkleTreesControllerSHA
+        treeId: a
+tags:
+- name: leaf
+- name: node
+- name: metaData
+- name: merkle-tree

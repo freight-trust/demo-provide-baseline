@@ -1,0 +1,183 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "treeHeight_a",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "treeHeight_b",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "leafCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "leafIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "leafValue",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewLeafA",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "minLeafIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "leafValues",
+        "type": "bytes32[]"
+      },
+      {
+        "indexed": false,
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewLeavesA",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "leafIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "leafValue",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewLeafB",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "minLeafIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "leafValues",
+        "type": "bytes32[]"
+      },
+      {
+        "indexed": false,
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "name": "NewLeavesB",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leafValue",
+        "type": "bytes32"
+      },
+      {
+        "name": "tree",
+        "type": "uint256"
+      }
+    ],
+    "name": "insertLeaf",
+    "outputs": [
+      {
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "leafValues",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "tree",
+        "type": "uint256"
+      }
+    ],
+    "name": "insertLeaves",
+    "outputs": [
+      {
+        "name": "root",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

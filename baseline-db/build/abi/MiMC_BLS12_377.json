@@ -1,0 +1,54 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "zero",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_msgs",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "mimc_bls12_377",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_msgs",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "mimcHash",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_x",
+        "type": "uint256"
+      },
+      {
+        "name": "in_k",
+        "type": "uint256"
+      }
+    ],
+    "name": "Encipher",
+    "outputs": [
+      {
+        "name": "out_x",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_msgs",
+        "type": "uint256[]"
+      },
+      {
+        "name": "in_key",
+        "type": "uint256"
+      }
+    ],
+    "name": "Hash",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_msgs",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "mimcHash",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "in_msgs",
+        "type": "bytes32[2]"
+      }
+    ],
+    "name": "mimcHash2",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]
