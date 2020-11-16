@@ -1,4 +1,15 @@
-# timber :evergreen_tree:
+# `fullstack demo`
+
+
+### instlal and run 
+
+```bash
+$ ./execute.sh
+````
+
+
+
+### timber :evergreen_tree:
 
 Construct a Merkle Tree database from Ethereum logs.  
 
