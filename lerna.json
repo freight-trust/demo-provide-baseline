@@ -2,7 +2,9 @@
   "packages": [
     "packages/*",
     "contracts/*",
-    "contract-event-listener/*"
+    "contract-event-listener/*",
+    "timber/*",
+    "deployer/*"
   ],
   "version": "0.0.0"
 }
