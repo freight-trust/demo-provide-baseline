@@ -1,0 +1,163 @@
+services:
+  localstack:
+    <<: *localstack
+
+  ganache:
+    <<: *ganache
+
+  deployer-participant-au:
+    <<: *deployer
+    container_name: baseline-deployer-participant-au
+    env_file:
+      - aws-credentials.env
+      - deployer-participant-au.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS
+      UNLOCK_FILENAME: CHANNEL_NODE_AU
+
+  deployer-participant-gb:
+    <<: *deployer
+    container_name: baseline-deployer-participant-gb
+    env_file:
+      - aws-credentials.env
+      - deployer-participant-gb.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS
+      UNLOCK_FILENAME: CHANNEL_NODE_GB
+
+  channel-api-callback-server:
+    <<: *channel-api-callback-server
+
+  channel-api-au:
+    <<: *channel-api
+    container_name: baseline-channel-api-au
+    env_file:
+      - channel-api.default.env
+      - channel-api-au.env
+    ports:
+      - '9090:9090'
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU
+
+  channel-api-new-messages-observer-au:
+    <<: *channel-api-new-messages-observer
+    container_name: channel-api-new-messages-observer-au
+    env_file:
+      - channel-api.default.env
+      - channel-api-au.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU
+
+  channel-api-callback-spreader-au:
+    <<: *channel-api-callback-spreader
+    container_name: baseline-channel-api-callback-spreader-au
+    env_file:
+      - channel-api.default.env
+      - channel-api-au.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU
+
+  channel-api-callback-delivery-au:
+    <<: *channel-api-callback-delivery
+    container_name: baseline-channel-api-callback-delivery-au
+    env_file:
+      - channel-api.default.env
+      - channel-api-au.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU
+
+  channel-api-gb:
+    <<: *channel-api
+    container_name: baseline-channel-api-gb
+    env_file:
+      - channel-api.default.env
+      - channel-api-gb.env
+    ports:
+      - '9091:9091'
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB
+
+  channel-api-new-messages-observer-gb:
+    <<: *channel-api-new-messages-observer
+    container_name: channel-api-new-messages-observer-gb
+    env_file:
+      - channel-api.default.env
+      - channel-api-gb.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB
+
+  channel-api-callback-spreader-gb:
+    <<: *channel-api-callback-spreader
+    container_name: baseline-channel-api-callback-spreader-gb
+    env_file:
+      - channel-api.default.env
+      - channel-api-gb.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB
+
+  channel-api-callback-delivery-gb:
+    <<: *channel-api-callback-delivery
+    container_name: baseline-channel-api-callback-delivery-gb
+    env_file:
+      - channel-api.default.env
+      - channel-api-gb.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB
+
+  contract-event-listener-au:
+    <<: *contract-event-listener
+    container_name: baseline-contract-event-listener-au
+    environment:
+      YAML_CONFIG_FILE_VALUE: ${YAML_CONFIG_FILE_VALUE_AU}
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU
+
+  contract-event-listener-gb:
+    <<: *contract-event-listener
+    container_name: baseline-contract-event-listener-gb
+    environment:
+      YAML_CONFIG_FILE_VALUE: ${YAML_CONFIG_FILE_VALUE_GB}
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB
+
+  system-tests:
+    container_name: baseline-system-tests
+    build:
+      context: system-tests
+      dockerfile: docker/Dockerfile
+    entrypoint: ["/entrypoint-wrapper.sh", "/system-tests/docker/entrypoint.sh"]
+    command: container
+    networks:
+      - internal
+    volumes:
+      - ./system-tests:/system-tests
+      - ./entrypoint-wrapper.sh:/entrypoint-wrapper.sh
+      - unlock:/tmp/unlock-file
+    environment:
+
+      REQUIRED_SERVERS: baseline-channel-api-au:9090 baseline-channel-api-gb:9091 baseline-channel-api-callback-server:11001
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB CHANNEL_NODE_AU
+
+      CALLBACK_SERVER_URL: http://baseline-channel-api-callback-server:11001/
+
+      CHANNEL_API_B_URL: http://baseline-channel-api-gb:9091/
+      CHANNEL_API_B_SENDER: GB
+
+      CHANNEL_API_A_URL: http://baseline-channel-api-au:9090/
+      CHANNEL_API_A_SENDER: AU
+    links:
+      - localstack
+      - ganache
+      - channel-api-callback-server
+
+      - deployer-participant-au
+      - channel-api-au
+      - channel-api-new-messages-observer-au
+      - channel-api-callback-spreader-au
+      - channel-api-callback-delivery-au
+      - contract-event-listener-au
+
+      - deployer-participant-gb
+      - channel-api-gb
+      - channel-api-new-messages-observer-gb
+      - channel-api-callback-spreader-gb
+      - channel-api-callback-delivery-gb
+      - contract-event-listener-gb

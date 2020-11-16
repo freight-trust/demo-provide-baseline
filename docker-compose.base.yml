@@ -1,0 +1,121 @@
+# "baseline" stands for trustbridge ethereum channel
+
+version: '3.5'
+
+networks:
+  internal:
+    name: baseline-internal
+
+volumes:
+  unlock:
+    name: baseline-unlock-files
+
+x-services:
+  deployer: &deployer
+    image: baseline/deployer
+    container_name: baseline-deployer
+    build:
+      context: ${dockerstagedir:-.}/contract-deployer
+      dockerfile: docker/Dockerfile
+    entrypoint: ["/entrypoint-wrapper.sh", "/deployer/docker/entrypoint.sh"]
+    command: -d -e scripts/channel-nodes-pairing.js
+    volumes:
+      - '${dockerstagedir:-.}/contract-deployer:/deployer'
+      - '${dockerstagedir:-.}/contract:/tmp/contract'
+      - '${dockerstagedir:-.}/entrypoint-wrapper.sh:/entrypoint-wrapper.sh'
+      - 'unlock:/tmp/unlock-file'
+    networks:
+      - internal
+    depends_on:
+      - localstack
+
+  channel-api: &channel-api
+    image: baseline/channel-api
+    container_name: baseline-channel-api
+    build:
+     context: '${dockerstagedir:-.}/channel-api'
+     dockerfile: docker/Dockerfile
+    entrypoint: ["/entrypoint-wrapper.sh", "/channel-api/docker/entrypoint.sh"]
+    command: server
+    volumes:
+      - /channel-api/node_modules
+      - '${dockerstagedir:-.}/channel-api:/channel-api'
+      - '${dockerstagedir:-.}/entrypoint-wrapper.sh:/entrypoint-wrapper.sh'
+      - 'unlock:/tmp/unlock-file'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    networks:
+      - internal
+
+  channel-api-new-messages-observer: &channel-api-new-messages-observer
+    <<: *channel-api
+    container_name: baseline-channel-api-new-messages-observer
+    command: new-messages-observer-processor
+
+  channel-api-callback-delivery: &channel-api-callback-delivery
+    <<: *channel-api
+    container_name: baseline-channel-api-callback-delivery
+    command: callback-delivery-processor
+
+  channel-api-callback-spreader: &channel-api-callback-spreader
+    <<: *channel-api
+    container_name: baseline-channel-api-callback-spreader
+    command: callback-spreader-processor
+
+  channel-api-callback-server: &channel-api-callback-server
+    <<: *channel-api
+    container_name: baseline-channel-api-callback-server
+    command: callback-server
+    environment:
+      PORT: '11001'
+    ports:
+      - '11001:11001'
+
+  contract-event-listener: &contract-event-listener
+    image: baseline/contract-event-listener
+    container_name: contract-event-listener
+    build:
+      context: ${dockerstagedir:-.}/contract-event-listener
+      dockerfile: docker/Dockerfile
+    entrypoint: ["/entrypoint-wrapper.sh", "/contract-event-listener/docker/entrypoint.sh"]
+    command: worker
+    env_file:
+      - aws-credentials.env
+    networks:
+      - internal
+    volumes:
+      - ${dockerstagedir:-.}/contract-event-listener:/contract-event-listener
+      - '${dockerstagedir:-.}/entrypoint-wrapper.sh:/entrypoint-wrapper.sh'
+      - 'unlock:/tmp/unlock-file'
+
+  localstack: &localstack
+    image: localstack/localstack
+    container_name: baseline-localstack
+    env_file:
+      - localstack.env
+    networks:
+      - internal
+    volumes:
+      - '${dockerstagedir:-.}/localstack:/docker-entrypoint-initaws.d'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'unlock:/tmp/unlock-file'
+    ports:
+      - '10001:10001'
+      - '9999:9999'
+
+  ganache-cli: &ganache
+    image: trufflesuite/ganache-cli
+    container_name: baseline-ganache-cli
+    networks:
+      - internal
+    command: >
+        ganache-cli
+        --quiet
+        --db /ganache-cli-database
+        --hostname 0.0.0.0
+        --port 8585
+        --networkId 15
+        --hardfork petersburg
+        --blockTime 0
+        --accounts 5
+        --deterministic
+        --mnemonic "myth like bonus scare over problem client lizard pioneer submit female collect"

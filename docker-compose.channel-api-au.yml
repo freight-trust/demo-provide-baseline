@@ -1,0 +1,48 @@
+services:
+  localstack:
+    <<: *localstack
+
+  ganache:
+    <<: *ganache
+
+  deployer-participant-au:
+    <<: *deployer
+    container_name: baseline-deployer-participant-au
+    env_file:
+      - aws-credentials.env
+      - deployer-participant-au.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS
+      UNLOCK_FILENAME: CHANNEL_NODE_AU
+
+  deployer-participant-gb:
+    <<: *deployer
+    container_name: baseline-deployer-participant-gb
+    env_file:
+      - aws-credentials.env
+      - deployer-participant-gb.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS
+      UNLOCK_FILENAME: CHANNEL_NODE_GB
+
+  channel-api-callback-server:
+    <<: *channel-api-callback-server
+
+  channel-api-au:
+    <<: *channel-api
+    container_name: baseline-channel-api-au
+    command: server
+    env_file:
+      - channel-api.default.env
+      - channel-api-au.env
+    ports:
+      - '9090:9090'
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_AU CHANNEL_NODE_GB
+      REQUIRED_SERVERS: baseline-channel-api-callback-server:11001
+    links:
+      - localstack
+      - ganache
+      - deployer-participant-au
+      - deployer-participant-gb
+      - channel-api-callback-server

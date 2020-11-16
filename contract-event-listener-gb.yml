@@ -1,0 +1,44 @@
+---
+  Receivers:
+    -
+      Id: MessageReceivedEventLogReceiver
+      Type: LOG
+      JSON:
+        id: transactionHash
+        message: args
+    -
+      Id: MessageReceivedEventSQLReceiver
+      Type: SQS
+      QueueUrl: http://baseline-localstack:10001/queue/channel-gb
+      JSON:
+        id: transactionHash
+        message: args
+    -
+      Id: MessageSentEventLogReceiver
+      Type: LOG
+  Listeners:
+    -
+      Id: MessageReceivedEventListener
+      Event:
+        Name: MessageReceivedEvent
+      Receivers:
+        - MessageReceivedEventLogReceiver
+        - MessageReceivedEventSQLReceiver
+    -
+      Id: MessageSentEventListener
+      Event:
+        Name: MessageSentEvent
+      Receivers:
+        - MessageSentEventLogReceiver
+  Worker:
+    Blockchain:
+      URI: ws://baseline-ganache-cli:8585
+    General:
+      PollingInterval: 5
+      ListenerBlocksLogDir: /tmp/listener-blocks-log
+      LoggerName: GB
+    Contract:
+      S3:
+        Bucket: contract
+        Key: channel-node-participant-gb/ChannelNode.json
+        NetworkId: "15"

@@ -1,0 +1,35 @@
+services:
+  localstack:
+    <<: *localstack
+
+  ganache:
+    <<: *ganache
+
+  contract-event-listener-contract:
+    <<: *deployer
+    container_name: baseline-contract-event-listener-contract
+    command: -d
+    env_file:
+      - aws-credentials.env
+      - deployer-event-emitter.env
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS
+      UNLOCK_FILENAME: EVENT_EMITTER
+    volumes:
+      - '${dockerstagedir:-.}/contract-deployer:/deployer'
+      - '${dockerstagedir:-.}/contract-event-listener/contract:/tmp/contract'
+      - '${dockerstagedir:-.}/entrypoint-wrapper.sh:/entrypoint-wrapper.sh'
+      - 'unlock:/tmp/unlock-file'
+
+  contract-event-listener:
+    <<: *contract-event-listener
+    container_name: baseline-contract-event-listener
+    command: container
+    environment:
+      REQUIRED_UNLOCK_FILES: AWS EVENT_EMITTER
+      WALLET_PUBLIC_KEY: "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
+      WALLET_PRIVATE_KEY: "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d"
+    links:
+      - localstack
+      - ganache
+      - contract-event-listener-contract

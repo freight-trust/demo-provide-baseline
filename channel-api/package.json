@@ -1,0 +1,19 @@
+{
+  "name": "channel-api",
+  "version": "1.0.0",
+  "description": "The project is designed to provide an interface for ChannelNode ethereum contract.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^2.11.1",
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-wsgi": "^1.7.6"
+  }
+}

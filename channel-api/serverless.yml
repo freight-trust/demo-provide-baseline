@@ -1,0 +1,25 @@
+service: channel-api
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+  stage: local
+
+functions:
+  app:
+    handler: wsgi_handler.handler
+    events:
+      - http: ANY /
+      - http: 'ANY /{proxy+}'
+
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
+
+custom:
+  wsgi:
+    app: src.api.lambda.app
+    packRequirements: false
+  pythonRequirements:
+    dockerizePip: non-linux

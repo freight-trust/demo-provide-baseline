@@ -1,0 +1,206 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Ethereum Channel API"
+
+components:
+  schemas:
+    Message:
+      type: object
+      required:
+        - id
+        - message
+        - status
+      properties:
+        id:
+          type: string
+        message:
+          type: object
+          required:
+            - object
+            - predicate
+            - subject
+            - sender
+            - receiver
+          properties:
+            object:
+              type: string
+            predicate:
+              type: string
+            subject:
+              type: string
+            receiver:
+              type: string
+            sender:
+              type: string
+        status:
+          type: string
+          enum: [received, confirmed, revoked, undeliverable]
+
+    Subscription:
+      type: object
+      required:
+        - hub.mode
+        - hub.callback
+        - hub.topic
+        - hub.lease_seconds
+      properties:
+        hub.mode:
+          type: string
+          enum: [subscribe, unsubscribe]
+        hub.callback:
+          type: string
+        hub.lease_seconds:
+          type: integer
+        hub.topic:
+          type: string
+        hub.challenge:
+          type: string
+
+
+  responses:
+    Error:
+      description: Standard error response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    detail:
+                      type: string
+                    source:
+                      type: array
+                      items: {}
+                    status:
+                      type: string
+                    title:
+                      type: string
+                    code:
+                      type: string
+    Message:
+      description: Standard message response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+
+
+paths:
+  /messages/{id}:
+    get:
+      summary: Get message by id(transaction hash)
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+
+      responses:
+        200:
+          $ref: "#/components/responses/Message"
+        404:
+          $ref: "#/components/responses/Error"
+
+  /messages:
+    post:
+      summary: Post a message from the channel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - object
+                - predicate
+                - subject
+                - receiver
+              properties:
+                object:
+                  type: string
+                predicate:
+                  type: string
+                subject:
+                  type: string
+                receiver:
+                  type: string
+                sender:
+                  type: string
+
+      responses:
+        200:
+          $ref: "#/components/responses/Message"
+        400:
+          $ref: "#/components/responses/Error"
+
+  /participants:
+    get:
+      summary: Get channel participants list
+      responses:
+        200:
+          description: Participants list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /topic/{topic}:
+    get:
+      summary: Verify that topic exists on the channel
+      parameters:
+        - in: path
+          name: topic
+          description: Channel message topic
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: topic string representation
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          $ref: "#/components/responses/Error"
+
+  /messages/subscriptions/by_id:
+    post:
+      summary: Subscribe/unsubscribe to/from a specific channel message topic
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Subscription"
+
+      responses:
+        200:
+          description: Subscribed/unsubscribed
+        400:
+          $ref: "#/components/responses/Error"
+
+  /messages/subscriptions/by_jurisdiction:
+    post:
+      summary: Subscribe/unsubscribe to/from a specific channel message topic prefixed with "jurisdiction."
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Subscription"
+      responses:
+        200:
+          description: Subscribed/unsubscribed
+        400:
+          $ref: "#/components/responses/Error"
+        404:
+          $ref: "#/components/responses/Error"
