@@ -1,6 +1,6 @@
 # `fullstack demo`
 
-### instlal and run
+### install and run
 
 ```bash
 $ ./execute.sh
