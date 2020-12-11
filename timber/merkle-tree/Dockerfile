@@ -6,7 +6,7 @@ COPY ./package.json ./package-lock.json ./
 COPY ./src ./src
 COPY ./test ./test
 COPY ./.babelrc ./
-RUN npm ci
+RUN npm install
 
 EXPOSE 80
 CMD npm start
