@@ -1,6 +1,9 @@
-Note that the below applies to code originated by EYGS LLP only. Source code modules originated by others, and included in this repository, carry license conditions. We have included license information in the relevant modules.
+Note that the below applies to code originated by EYGS LLP only. Source code modules originated by
+others, and included in this repository, carry license conditions. We have included license
+information in the relevant modules.
 
-While not required, we appreciate a small attribution to the effect that "This software makes use of the Timber code originally created by EY".
+While not required, we appreciate a small attribution to the effect that "This software makes use of
+the Timber code originally created by EY".
 
 <p xmlns:dct="http://purl.org/dc/terms/">
   <a rel="license"

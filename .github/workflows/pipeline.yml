@@ -1,4 +1,3 @@
-
 # GitHub Nodejs CI
 name: pipeline
 
@@ -6,7 +5,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -14,16 +12,16 @@ jobs:
         node-version: ['10.x']
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm install lerna --global
-        npm install
-        cd timber/ && npm install && cd -
-        cd contracts/ && npm install && cd -
-      env:
-        CI: true
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build, and test
+        run: |
+          npm install lerna --global
+          npm install
+          cd timber/ && npm install && cd -
+          cd contracts/ && npm install && cd -
+        env:
+          CI: true

@@ -210,30 +210,21 @@ async function getLatestLeaf(req, res, next) {
 }
 
 // initializing routes
-export default function(router) {
+export default function (router) {
   // NODE ROUTES
 
   router.route('/metadata').get(getMetadata);
 
-  router
-    .route('/metadata/contractAddress')
-    .get(getContractAddress)
-    .post(insertContractAddress);
+  router.route('/metadata/contractAddress').get(getContractAddress).post(insertContractAddress);
 
   router
     .route('/metadata/contractInterface')
     .get(getContractInterface)
     .post(insertContractInterface);
 
-  router
-    .route('/metadata/treeHeight')
-    .get(getTreeHeight)
-    .post(insertTreeHeight);
+  router.route('/metadata/treeHeight').get(getTreeHeight).post(insertTreeHeight);
 
-  router
-    .route('/metadata/latestLeaf')
-    .get(getLatestLeaf)
-    .patch(updateLatestLeaf);
+  router.route('/metadata/latestLeaf').get(getLatestLeaf).patch(updateLatestLeaf);
 
   router
     .route('/metadata/latestRecalculation')

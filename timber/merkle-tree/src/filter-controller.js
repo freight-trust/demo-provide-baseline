@@ -44,7 +44,7 @@ const newLeafResponseFunction = async (eventObject, args) => {
   }
   */
   const eventInstance = {};
-  eventParams.forEach(param => {
+  eventParams.forEach((param) => {
     eventInstance[param] = eventData.returnValues[param];
   });
   logger.silly(`eventInstance: ${JSON.stringify(eventInstance, null, 2)}`);
@@ -94,7 +94,7 @@ const newLeavesResponseFunction = async (eventObject, args) => {
   }
   */
   const eventInstance = {};
-  eventParams.forEach(param => {
+  eventParams.forEach((param) => {
     eventInstance[param] = eventData.returnValues[param];
   });
   logger.silly(`eventInstance: ${JSON.stringify(eventInstance, null, 2)}`);
@@ -183,7 +183,7 @@ async function filterBlock(db, contractName, contractInstance, fromBlock, treeId
     await metadataService.updateLatestRecalculation({ latestRecalculation });
   }
 
-  eventNames.forEach(async eventName => {
+  eventNames.forEach(async (eventName) => {
     const responder = newEventResponder;
     const responseFunction =
       eventName === eventNames[0] ? responseFunctions.NewLeaf : responseFunctions.NewLeaves;

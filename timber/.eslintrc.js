@@ -11,7 +11,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        'devDependencies': ['integration-test/test.js', 'integration-test/testData.js'],
+        devDependencies: ['integration-test/test.js', 'integration-test/testData.js'],
       },
     ],
   },
@@ -19,6 +19,6 @@ module.exports = {
     mocha: true,
   },
   globals: {
-  'BigInt':true
-},
+    BigInt: true,
+  },
 };

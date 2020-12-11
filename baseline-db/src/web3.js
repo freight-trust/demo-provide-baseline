@@ -4,8 +4,8 @@
 @author liju jose
 */
 
-import Web3 from "web3";
-import config from "config";
+import Web3 from 'web3';
+import config from 'config';
 
 export default {
   connection() {
@@ -18,16 +18,16 @@ export default {
   connect() {
     if (this.web3) return this.web3;
 
-    console.log("\nBlockchain Connecting ...");
+    console.log('\nBlockchain Connecting ...');
     const provider = new Web3.providers.WebsocketProvider(
       `${config.web3.host}:${config.web3.port}`,
       null,
-      config.web3.options
+      config.web3.options,
     );
 
-    provider.on("error", console.error);
-    provider.on("connect", () => console.log("\nBlockchain Connected ..."));
-    provider.on("end", console.error);
+    provider.on('error', console.error);
+    provider.on('connect', () => console.log('\nBlockchain Connected ...'));
+    provider.on('end', console.error);
 
     this.web3 = new Web3(provider);
 

@@ -17,7 +17,7 @@ x-services:
     build:
       context: ${dockerstagedir:-.}/contract-deployer
       dockerfile: docker/Dockerfile
-    entrypoint: ["/entrypoint-wrapper.sh", "/deployer/docker/entrypoint.sh"]
+    entrypoint: ['/entrypoint-wrapper.sh', '/deployer/docker/entrypoint.sh']
     command: -d -e scripts/channel-nodes-pairing.js
     volumes:
       - '${dockerstagedir:-.}/contract-deployer:/deployer'
@@ -33,9 +33,9 @@ x-services:
     image: baseline/channel-api
     container_name: baseline-channel-api
     build:
-     context: '${dockerstagedir:-.}/channel-api'
-     dockerfile: docker/Dockerfile
-    entrypoint: ["/entrypoint-wrapper.sh", "/channel-api/docker/entrypoint.sh"]
+      context: '${dockerstagedir:-.}/channel-api'
+      dockerfile: docker/Dockerfile
+    entrypoint: ['/entrypoint-wrapper.sh', '/channel-api/docker/entrypoint.sh']
     command: server
     volumes:
       - /channel-api/node_modules
@@ -76,7 +76,7 @@ x-services:
     build:
       context: ${dockerstagedir:-.}/contract-event-listener
       dockerfile: docker/Dockerfile
-    entrypoint: ["/entrypoint-wrapper.sh", "/contract-event-listener/docker/entrypoint.sh"]
+    entrypoint: ['/entrypoint-wrapper.sh', '/contract-event-listener/docker/entrypoint.sh']
     command: worker
     env_file:
       - aws-credentials.env
@@ -108,17 +108,9 @@ x-services:
     networks:
       - internal
     command: >
-        ganache-cli
-        --quiet
-        --db /ganache-cli-database
-        --hostname 0.0.0.0
-        --port 8585
-        --networkId 15
-        --hardfork petersburg
-        --blockTime 0
-        --accounts 5
-        --deterministic
-        --mnemonic "myth like bonus scare over problem client lizard pioneer submit female collect"
+      ganache-cli --quiet --db /ganache-cli-database --hostname 0.0.0.0 --port 8585 --networkId 15
+      --hardfork petersburg --blockTime 0 --accounts 5 --deterministic --mnemonic "myth like bonus
+      scare over problem client lizard pioneer submit female collect"
 services:
   localstack:
     <<: *localstack
@@ -244,7 +236,7 @@ services:
     build:
       context: system-tests
       dockerfile: docker/Dockerfile
-    entrypoint: ["/entrypoint-wrapper.sh", "/system-tests/docker/entrypoint.sh"]
+    entrypoint: ['/entrypoint-wrapper.sh', '/system-tests/docker/entrypoint.sh']
     command: container
     networks:
       - internal
@@ -253,8 +245,9 @@ services:
       - ./entrypoint-wrapper.sh:/entrypoint-wrapper.sh
       - unlock:/tmp/unlock-file
     environment:
-
-      REQUIRED_SERVERS: baseline-channel-api-au:9090 baseline-channel-api-gb:9091 baseline-channel-api-callback-server:11001
+      REQUIRED_SERVERS:
+        baseline-channel-api-au:9090 baseline-channel-api-gb:9091
+        baseline-channel-api-callback-server:11001
       REQUIRED_UNLOCK_FILES: AWS CHANNEL_NODE_GB CHANNEL_NODE_AU
 
       CALLBACK_SERVER_URL: http://baseline-channel-api-callback-server:11001/

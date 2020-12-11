@@ -2,10 +2,10 @@
 @author iAmMichaelConnor
 */
 
-import assert from "assert";
-import config from "config";
-import Web3 from "../src/web3";
-import deployer from "./rest/deployer";
+import assert from 'assert';
+import config from 'config';
+import Web3 from '../src/web3';
+import deployer from './rest/deployer';
 
 const web3 = Web3.connect();
 
@@ -17,7 +17,7 @@ const numberOfBatches = 1;
 const batchSize = 16;
 
 describe(`${contractName}`, async () => {
-  before("get contractInstance", async () => {
+  before('get contractInstance', async () => {
     if (!(await Web3.isConnected())) await Web3.connection();
 
     coinbase = await web3.eth.getCoinbase();
@@ -25,11 +25,11 @@ describe(`${contractName}`, async () => {
     contractInstance = await deployer.getContractInstance(contractName);
   });
 
-  it("Should have hash_type = SHA for this multiple merkle trees test", async () => {
+  it('Should have hash_type = SHA for this multiple merkle trees test', async () => {
     console.log(
-      "While treeIds can be used for any hash type, this test only works with SHA hashing"
+      'While treeIds can be used for any hash type, this test only works with SHA hashing',
     );
-    assert.notEqual(process.env.HASH_TYPE, "mimc");
+    assert.notEqual(process.env.HASH_TYPE, 'mimc');
   });
 
   // eslint-disable-next-line func-names
@@ -48,7 +48,7 @@ describe(`${contractName}`, async () => {
 
     it(`adds one leaf at a time correctly`, async () => {
       for (let i = 0; i < batchSize; i += 1) {
-        const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+        const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
 
         // eslint-disable-next-line no-await-in-loop
         const txReceiptA = await contractInstance.methods
@@ -59,18 +59,9 @@ describe(`${contractName}`, async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on("receipt", (receipt) => {
-            const {
-              leafIndex,
-              leafValue,
-              root,
-            } = receipt.events.NewLeafA.returnValues;
-            console.log(
-              "NewLeaf A event returnValues:",
-              leafIndex,
-              leafValue,
-              root
-            );
+          .on('receipt', (receipt) => {
+            const { leafIndex, leafValue, root } = receipt.events.NewLeafA.returnValues;
+            console.log('NewLeaf A event returnValues:', leafIndex, leafValue, root);
 
             // // For debugging the hash function:
             // const outputs = receipt.events.Output.map(event => {
@@ -79,7 +70,7 @@ describe(`${contractName}`, async () => {
             // });
             // console.log('outputs:', outputs);
           });
-        const leafB = (batchSize - i).toString().padStart(64, "0");
+        const leafB = (batchSize - i).toString().padStart(64, '0');
         // eslint-disable-next-line no-await-in-loop
         const txReceiptB = await contractInstance.methods
           ._insertLeaf(`0x${leafB}`, 1)
@@ -89,18 +80,9 @@ describe(`${contractName}`, async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on("receipt", (receipt) => {
-            const {
-              leafIndex,
-              leafValue,
-              root,
-            } = receipt.events.NewLeafB.returnValues;
-            console.log(
-              "NewLeaf B event returnValues:",
-              leafIndex,
-              leafValue,
-              root
-            );
+          .on('receipt', (receipt) => {
+            const { leafIndex, leafValue, root } = receipt.events.NewLeafB.returnValues;
+            console.log('NewLeaf B event returnValues:', leafIndex, leafValue, root);
 
             // // For debugging the hash function:
             // const outputs = receipt.events.Output.map(event => {
@@ -118,21 +100,21 @@ describe(`${contractName}`, async () => {
       }
     });
 
-    after("provide summary stats", async () => {
+    after('provide summary stats', async () => {
       totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
       max = Math.max(...gasUsedArray);
       min = Math.min(...gasUsedArray);
       averageGasUsed = totalGasUsed / batchSize;
       averageGasUsedMinusTxCost = averageGasUsed - 21000;
       range = max - min;
-      console.log("gasUsedArray:");
+      console.log('gasUsedArray:');
       console.dir(gasUsedArray, { maxArrayLength: null });
-      console.log("totalGasUsed:", totalGasUsed);
-      console.log("averageGasUsed:", averageGasUsed);
-      console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
-      console.log("min:", min);
-      console.log("max:", max);
-      console.log("range:", range);
+      console.log('totalGasUsed:', totalGasUsed);
+      console.log('averageGasUsed:', averageGasUsed);
+      console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
+      console.log('min:', min);
+      console.log('max:', max);
+      console.log('range:', range);
     });
   });
 
@@ -149,7 +131,7 @@ describe(`${contractName}`, async () => {
       // create the leafValues to add:
       const leaves = [];
       for (let i = 0; i < batchSize; i += 1) {
-        const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+        const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
         leaves.push(`0x${leaf}`);
       }
       // eslint-disable-next-line no-await-in-loop
@@ -161,19 +143,10 @@ describe(`${contractName}`, async () => {
           gasPrice: config.web3.options.defaultGasPrice,
         })
         // eslint-disable-next-line no-loop-func
-        .on("receipt", (receipt) => {
-          const {
-            minLeafIndex,
-            leafValues,
-            root,
-          } = receipt.events.NewLeavesA.returnValues;
+        .on('receipt', (receipt) => {
+          const { minLeafIndex, leafValues, root } = receipt.events.NewLeavesA.returnValues;
 
-          console.log(
-            "NewLeaves A event returnValues:",
-            minLeafIndex,
-            leafValues,
-            root
-          );
+          console.log('NewLeaves A event returnValues:', minLeafIndex, leafValues, root);
 
           // console.dir(receipt.events, { depth: null });
         });
@@ -187,19 +160,10 @@ describe(`${contractName}`, async () => {
           gasPrice: config.web3.options.defaultGasPrice,
         })
         // eslint-disable-next-line no-loop-func
-        .on("receipt", (receipt) => {
-          const {
-            minLeafIndex,
-            leafValues,
-            root,
-          } = receipt.events.NewLeavesB.returnValues;
+        .on('receipt', (receipt) => {
+          const { minLeafIndex, leafValues, root } = receipt.events.NewLeavesB.returnValues;
 
-          console.log(
-            "NewLeaves B event returnValues:",
-            minLeafIndex,
-            leafValues,
-            root
-          );
+          console.log('NewLeaves B event returnValues:', minLeafIndex, leafValues, root);
 
           // console.dir(receipt.events, { depth: null });
         });
@@ -212,15 +176,15 @@ describe(`${contractName}`, async () => {
       gasUsedArray.push(gasUsed);
     });
 
-    after("provide summary stats", async () => {
+    after('provide summary stats', async () => {
       totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
       averageGasUsed = totalGasUsed / batchSize;
       averageGasUsedMinusTxCost = (totalGasUsed - 21000) / batchSize;
-      console.log("\ngasUsedArray:");
+      console.log('\ngasUsedArray:');
       console.dir(gasUsedArray, { maxArrayLength: null });
-      console.log("totalGasUsed:", totalGasUsed);
-      console.log("averageGasUsed:", averageGasUsed);
-      console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
+      console.log('totalGasUsed:', totalGasUsed);
+      console.log('averageGasUsed:', averageGasUsed);
+      console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
     });
   });
   //

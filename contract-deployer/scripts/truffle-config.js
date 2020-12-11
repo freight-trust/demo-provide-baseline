@@ -1,19 +1,16 @@
-const HDWalletProvider = require("@truffle/hdwallet-provider");
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
-function getEnv(name, defaultValue){
+function getEnv(name, defaultValue) {
   const value = process.env[name] || defaultValue;
-  if(value === undefined){
+  if (value === undefined) {
     throw Error(`Missing "${name}" environment variable`);
   }
   return value;
 }
 
-
 const NETWORK_ID = getEnv('TRUFFLE_NETWORK_ID');
 const WALLET_PK = getEnv('TRUFFLE_WALLET_PK');
 const BLOCKCHAIN_ENDPOINT = getEnv('TRUFFLE_BLOCKCHAIN_ENDPOINT', null);
-
-
 
 module.exports = {
   networks: {
@@ -21,11 +18,11 @@ module.exports = {
       port: 8545,
       network_id: 15,
       accounts: 1,
-      defaultEtherBalance: 500
+      defaultEtherBalance: 500,
     },
-    production:{
+    production: {
       network_id: NETWORK_ID,
-      provider: ()=> new HDWalletProvider([WALLET_PK], BLOCKCHAIN_ENDPOINT, 0)
-    }
-  }
-}
+      provider: () => new HDWalletProvider([WALLET_PK], BLOCKCHAIN_ENDPOINT, 0),
+    },
+  },
+};

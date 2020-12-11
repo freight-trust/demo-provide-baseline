@@ -10,7 +10,7 @@ const poll = async (pollingFunction, interval, arg1, arg2) => {
     const response = await pollingFunction(arg1, arg2); // polling function must return a FALSE if unsuccessful.
     if (response === false) {
       // if the polling function was unsuccessful, poll again:
-      console.log("...");
+      console.log('...');
       setTimeout(checkPollCondition, interval, resolve, reject);
     } else {
       // if the polling function was successful, resolve this poll.
@@ -52,7 +52,7 @@ EXAMPLE ONLY - an example of a pollingFunction
 @returns {boolean} - ALWAYS!!!
 */
 const examplePollingFunction = async () => {
-  console.log("in pollingFunction");
+  console.log('in pollingFunction');
   const response = await exampleQuery();
   console.log(`response: ${response}`);
   return response;

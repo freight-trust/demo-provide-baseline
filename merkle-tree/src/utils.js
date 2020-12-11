@@ -222,9 +222,7 @@ function powerMod(base, exponent, m) {
 
 function keccak256Hash(item) {
   const preimage = strip0x(item);
-  const h = `0x${createKeccakHash('keccak256')
-    .update(preimage, 'hex')
-    .digest('hex')}`;
+  const h = `0x${createKeccakHash('keccak256').update(preimage, 'hex').digest('hex')}`;
   return h;
 }
 
@@ -277,13 +275,10 @@ function mimcHash(...msgs) {
 
 function shaHash(...items) {
   const concatvalue = items
-    .map(item => Buffer.from(strip0x(item), 'hex'))
+    .map((item) => Buffer.from(strip0x(item), 'hex'))
     .reduce((acc, item) => concatenate(acc, item));
 
-  const h = `0x${crypto
-    .createHash('sha256')
-    .update(concatvalue, 'hex')
-    .digest('hex')}`;
+  const h = `0x${crypto.createHash('sha256').update(concatvalue, 'hex').digest('hex')}`;
   return h;
 }
 

@@ -26,7 +26,7 @@ describe(`${contractName}`, async () => {
   });
 
   // eslint-disable-next-line func-names
-  describe(`mimc hashing via ${contractName}`, async function() {
+  describe(`mimc hashing via ${contractName}`, async function () {
     this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
     // console.log('in config', config.contractNames, config.HASH_TYPE);
@@ -87,7 +87,7 @@ describe(`${contractName}`, async () => {
   });
 
   // eslint-disable-next-line func-names
-  describe(`adding leaves (one-at-a-time) via ${contractName}`, async function() {
+  describe(`adding leaves (one-at-a-time) via ${contractName}`, async function () {
     this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
     // console.log('in config', config.contractNames, config.HASH_TYPE);
@@ -113,7 +113,7 @@ describe(`${contractName}`, async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on('receipt', receipt => {
+          .on('receipt', (receipt) => {
             const { leafIndex, leafValue, root } = receipt.events.NewLeaf.returnValues;
             console.log('NewLeaf event returnValues:', leafIndex, leafValue, root);
 
@@ -148,7 +148,7 @@ describe(`${contractName}`, async () => {
   });
 
   // eslint-disable-next-line func-names
-  describe(`Adding ${batchSize} leaves at once`, async function() {
+  describe(`Adding ${batchSize} leaves at once`, async function () {
     this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
     const gasUsedArray = [];
@@ -172,7 +172,7 @@ describe(`${contractName}`, async () => {
           gasPrice: config.web3.options.defaultGasPrice,
         })
         // eslint-disable-next-line no-loop-func
-        .on('receipt', receipt => {
+        .on('receipt', (receipt) => {
           const { minLeafIndex, leafValues, root } = receipt.events.NewLeaves.returnValues;
 
           console.log('NewLeaves event returnValues:', minLeafIndex, leafValues, root);

@@ -53,7 +53,7 @@ beforeEach('Redeploy contract', async () => {
 
 describe('insertLeaf', async () => {
   // eslint-disable-next-line func-names
-  describe(`adding ${n} leaves one-at-a-time`, async function() {
+  describe(`adding ${n} leaves one-at-a-time`, async function () {
     this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
     const gasUsedArray = [];
@@ -77,7 +77,7 @@ describe('insertLeaf', async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on('receipt', receipt => {
+          .on('receipt', (receipt) => {
             const { leafIndex, leafValue, root } = receipt.events.NewLeaf.returnValues;
             console.log('NewLeaf:', leafIndex, leafValue, root);
           });
@@ -115,7 +115,7 @@ describe('insertLeaves', async () => {
 
     const batchSize = insertLeavesBatchSizes[j];
     // eslint-disable-next-line func-names, no-loop-func
-    describe(`insertLeaves batch size ${batchSize}`, async function() {
+    describe(`insertLeaves batch size ${batchSize}`, async function () {
       this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
       // eslint-disable-next-line no-loop-func
@@ -135,7 +135,7 @@ describe('insertLeaves', async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on('receipt', receipt => {
+          .on('receipt', (receipt) => {
             const { minLeafIndex, leafValues, root } = receipt.events.NewLeaves.returnValues;
             // console.log(minLeafIndex, leafValues, root);
           });

@@ -1,17 +1,19 @@
 # README
 
-A single-threaded worker that reroutes for ethereum blockchain contract events according to provided configuration.
+A single-threaded worker that reroutes for ethereum blockchain contract events according to provided
+configuration.
 
 The configuration contains 3 main sections:
-1. Worker: configures main worker parameters:
-  1. Contract - events of which will be listened to.
-  1. General - worker execution parameters.
-  1. Blockchain - blockchain connection parameters.
-1. Receivers - configures receivers for the events. There are 2 types of receivers:
-    1. Log Receiver - outputs event payload using logger provided, STDOUT or Sentry.
-    1. SQS Receiver - sends event payload to the specified queue.
-1. Listeners - configures listeners that listen for a specified event of the contract and then send it to receivers.
 
+1. Worker: configures main worker parameters:
+1. Contract - events of which will be listened to.
+1. General - worker execution parameters.
+1. Blockchain - blockchain connection parameters.
+1. Receivers - configures receivers for the events. There are 2 types of receivers:
+   1. Log Receiver - outputs event payload using logger provided, STDOUT or Sentry.
+   1. SQS Receiver - sends event payload to the specified queue.
+1. Listeners - configures listeners that listen for a specified event of the contract and then send
+   it to receivers.
 
 #### Config Example
 
@@ -65,11 +67,13 @@ The configuration contains 3 main sections:
 ```
 
 #### Entrypoint Args:
-1. ```worker``` - launch worker in production mode
-1. ```worker-debug``` - launch worker in debug mode
-1. ```test``` - launch tests
-1. ```container``` - wait indefinitely, useful for docker development
+
+1. `worker` - launch worker in production mode
+1. `worker-debug` - launch worker in debug mode
+1. `test` - launch tests
+1. `container` - wait indefinitely, useful for docker development
 
 #### Config(Environment):
-1. ```JSON_CONFIG_FILE_VALUE``` - set JSON config file content through environment
-1. ```YAML_CONFIG_FILE_VALUE``` - set YAML config file content through environment
+
+1. `JSON_CONFIG_FILE_VALUE` - set JSON config file content through environment
+1. `YAML_CONFIG_FILE_VALUE` - set YAML config file content through environment

@@ -2,12 +2,12 @@
 @author iAmMichaelConnor
 */
 
-import assert from "assert";
-import config from "config";
+import assert from 'assert';
+import config from 'config';
 
-import Web3 from "../src/web3";
+import Web3 from '../src/web3';
 
-import contractDeployer from "../src/deployer";
+import contractDeployer from '../src/deployer';
 
 const web3 = Web3.connect();
 
@@ -42,7 +42,7 @@ const insertLeavesBatchSizes = [
   1024,
 ];
 
-beforeEach("Redeploy contract", async () => {
+beforeEach('Redeploy contract', async () => {
   if (!(await Web3.isConnected())) await Web3.connection();
 
   coinbase = await web3.eth.getCoinbase();
@@ -51,7 +51,7 @@ beforeEach("Redeploy contract", async () => {
   contractInstance = await contractDeployer.deploy(contractName);
 });
 
-describe("insertLeaf", async () => {
+describe('insertLeaf', async () => {
   // eslint-disable-next-line func-names
   describe(`adding ${n} leaves one-at-a-time`, async function () {
     this.timeout(3660000); // surprisingly, this.timeout() doesn't work inside an arrow function!
@@ -66,7 +66,7 @@ describe("insertLeaf", async () => {
 
     it(`adds the leaves`, async () => {
       for (let i = 0; i < n; i += 1) {
-        const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+        const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
 
         // eslint-disable-next-line no-await-in-loop
         const txReceipt = await contractInstance.methods
@@ -77,13 +77,9 @@ describe("insertLeaf", async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on("receipt", (receipt) => {
-            const {
-              leafIndex,
-              leafValue,
-              root,
-            } = receipt.events.NewLeaf.returnValues;
-            console.log("NewLeaf:", leafIndex, leafValue, root);
+          .on('receipt', (receipt) => {
+            const { leafIndex, leafValue, root } = receipt.events.NewLeaf.returnValues;
+            console.log('NewLeaf:', leafIndex, leafValue, root);
           });
 
         const { gasUsed } = txReceipt;
@@ -91,26 +87,26 @@ describe("insertLeaf", async () => {
       }
     });
 
-    after("\nprovide summary stats", async () => {
+    after('\nprovide summary stats', async () => {
       totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
       max = Math.max(...gasUsedArray);
       min = Math.min(...gasUsedArray);
       averageGasUsed = totalGasUsed / n;
       averageGasUsedMinusTxCost = averageGasUsed - 21000;
       range = max - min;
-      console.log("\ngasUsedArray:");
+      console.log('\ngasUsedArray:');
       console.dir(gasUsedArray, { maxArrayLength: null });
-      console.log("totalGasUsed:", totalGasUsed);
-      console.log("averageGasUsed:", averageGasUsed);
-      console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
-      console.log("min:", min);
-      console.log("max:", max);
-      console.log("range:", range);
+      console.log('totalGasUsed:', totalGasUsed);
+      console.log('averageGasUsed:', averageGasUsed);
+      console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
+      console.log('min:', min);
+      console.log('max:', max);
+      console.log('range:', range);
     });
   });
 });
 
-describe("insertLeaves", async () => {
+describe('insertLeaves', async () => {
   for (let j = 0; j < insertLeavesBatchSizes.length; j++) {
     const gasUsedArray = [];
     let totalGasUsed = 0;
@@ -127,7 +123,7 @@ describe("insertLeaves", async () => {
         // create the leafValues to add:
         const leaves = [];
         for (let i = 0; i < batchSize; i += 1) {
-          const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+          const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
           leaves.push(`0x${leaf}`);
         }
         // eslint-disable-next-line no-await-in-loop
@@ -139,12 +135,8 @@ describe("insertLeaves", async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on("receipt", (receipt) => {
-            const {
-              minLeafIndex,
-              leafValues,
-              root,
-            } = receipt.events.NewLeaves.returnValues;
+          .on('receipt', (receipt) => {
+            const { minLeafIndex, leafValues, root } = receipt.events.NewLeaves.returnValues;
             // console.log(minLeafIndex, leafValues, root);
           });
 
@@ -157,11 +149,11 @@ describe("insertLeaves", async () => {
         totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
         averageGasUsed = totalGasUsed / batchSize;
         averageGasUsedMinusTxCost = (totalGasUsed - 21000) / batchSize;
-        console.log("\ngasUsedArray:");
+        console.log('\ngasUsedArray:');
         console.dir(gasUsedArray, { maxArrayLength: null });
-        console.log("totalGasUsed:", totalGasUsed);
-        console.log("averageGasUsed:", averageGasUsed);
-        console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
+        console.log('totalGasUsed:', totalGasUsed);
+        console.log('averageGasUsed:', averageGasUsed);
+        console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
       });
     });
   }

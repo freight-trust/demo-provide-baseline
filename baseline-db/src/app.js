@@ -4,12 +4,12 @@
 @author westlad
 */
 
-import express, { Router } from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
+import express, { Router } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-import Web3 from "./web3";
-import deployerRoutes from "./routes/deployer.routes";
+import Web3 from './web3';
+import deployerRoutes from './routes/deployer.routes';
 
 const app = express();
 Web3.connect();

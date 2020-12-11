@@ -7,20 +7,20 @@
 let nodeHashLength;
 let contracts;
 
-if (process.env.HASH_TYPE === "mimc") {
+if (process.env.HASH_TYPE === 'mimc') {
   nodeHashLength = 32;
-  if (process.env.CURVE === "BLS12_377") {
-    contracts = ["MerkleTreeControllerMiMC_BLS12"];
+  if (process.env.CURVE === 'BLS12_377') {
+    contracts = ['MerkleTreeControllerMiMC_BLS12'];
   } else {
-    contracts = ["MerkleTreeControllerMiMC_BN128"];
+    contracts = ['MerkleTreeControllerMiMC_BN128'];
   }
 } else {
   nodeHashLength = 27;
-  contracts = ["MerkleTreeControllerSHA", "MultipleMerkleTreesControllerSHA"];
+  contracts = ['MerkleTreeControllerSHA', 'MultipleMerkleTreesControllerSHA'];
 }
 
 module.exports = {
-  LEVEL_DB_PATH: "/app/db/db",
+  LEVEL_DB_PATH: '/app/db/db',
   POLLING_FREQUENCY: 6000, // How many milliseconds to wait between each poll
   HASH_TYPE: process.env.HASH_TYPE,
   CURVE: process.env.CURVE,
@@ -39,11 +39,11 @@ module.exports = {
         // filter for the following event names:
         NewLeaf: {
           // filter for these event parameters:
-          parameters: ["leafIndex", "leafValue"],
+          parameters: ['leafIndex', 'leafValue'],
         },
         NewLeaves: {
           // filter for these event parameters:
-          parameters: ["minLeafIndex", "leafValues"],
+          parameters: ['minLeafIndex', 'leafValues'],
         },
       },
     },
@@ -53,11 +53,11 @@ module.exports = {
         // filter for the following event names:
         NewLeaf: {
           // filter for these event parameters:
-          parameters: ["leafIndex", "leafValue"],
+          parameters: ['leafIndex', 'leafValue'],
         },
         NewLeaves: {
           // filter for these event parameters:
-          parameters: ["minLeafIndex", "leafValues"],
+          parameters: ['minLeafIndex', 'leafValues'],
         },
       },
     },
@@ -67,11 +67,11 @@ module.exports = {
         // filter for the following event names:
         NewLeaf: {
           // filter for these event parameters:
-          parameters: ["leafIndex", "leafValue"],
+          parameters: ['leafIndex', 'leafValue'],
         },
         NewLeaves: {
           // filter for these event parameters:
-          parameters: ["minLeafIndex", "leafValues"],
+          parameters: ['minLeafIndex', 'leafValues'],
         },
       },
     },
@@ -81,11 +81,11 @@ module.exports = {
         // filter for the following event names:
         NewLeaf: {
           // filter for these event parameters:
-          parameters: ["leafIndex", "leafValue"],
+          parameters: ['leafIndex', 'leafValue'],
         },
         NewLeaves: {
           // filter for these event parameters:
-          parameters: ["minLeafIndex", "leafValues"],
+          parameters: ['minLeafIndex', 'leafValues'],
         },
       },
     },
@@ -109,8 +109,8 @@ module.exports = {
     port: process.env.BLOCKCHAIN_PORT,
 
     options: {
-      defaultAccount: "0x0",
-      defaultBlock: "0", // e.g. the genesis block our blockchain
+      defaultAccount: '0x0',
+      defaultBlock: '0', // e.g. the genesis block our blockchain
       defaultGas: 2000000,
       defaultGasPrice: 20000000000,
       transactionBlockTimeout: 50,

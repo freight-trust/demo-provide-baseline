@@ -33,8 +33,9 @@ async function checkLeaves(db) {
   if (leafCount < maxLeafIndex + 1) {
     // then we are missing values. Let's do a slower search to find the earliest missing value:
     logger.warn(
-      `There are missing leaves in the db. Found ${leafCount} leaves, but expected ${maxLeafIndex +
-        1}. Performing a slower check to find the missing leaves...`,
+      `There are missing leaves in the db. Found ${leafCount} leaves, but expected ${
+        maxLeafIndex + 1
+      }. Performing a slower check to find the missing leaves...`,
     );
     const missingLeaves = await leafService.findMissingLeaves(0, maxLeafIndex);
 
@@ -250,7 +251,7 @@ async function update(db) {
     let { frontier } = latestRecalculation;
     frontier = frontier === undefined ? [] : frontier;
     const leaves = await leafService.getLeavesByLeafIndexRange(fromLeafIndex, toLeafIndex);
-    const leafValues = leaves.map(leaf => leaf.value);
+    const leafValues = leaves.map((leaf) => leaf.value);
     const currentLeafCount = fromLeafIndex;
 
     const [root, newFrontier] = await utilsMT.updateNodes(

@@ -1,10 +1,4 @@
 {
-  "packages": [
-    "packages/*",
-    "contracts/*",
-    "contract-event-listener/*",
-    "timber/*",
-    "deployer/*"
-  ],
+  "packages": ["packages/*", "contracts/*", "contract-event-listener/*", "timber/*", "deployer/*"],
   "version": "0.0.0"
 }

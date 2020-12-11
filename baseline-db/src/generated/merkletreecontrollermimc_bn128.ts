@@ -11,8 +11,8 @@ import {
   PromiseWithTransactionHash,
   methodAbiToFunctionSignature,
   linkLibrariesInBytecode,
-} from "@0x/base-contract";
-import { schemas } from "@0x/json-schemas";
+} from '@0x/base-contract';
+import { schemas } from '@0x/json-schemas';
 import {
   BlockParam,
   BlockParamLiteral,
@@ -27,22 +27,12 @@ import {
   TxData,
   TxDataPayable,
   SupportedProvider,
-} from "ethereum-types";
-import {
-  BigNumber,
-  classUtils,
-  hexUtils,
-  logUtils,
-  providerUtils,
-} from "@0x/utils";
-import {
-  EventCallback,
-  IndexedFilterValues,
-  SimpleContractArtifact,
-} from "@0x/types";
-import { Web3Wrapper } from "@0x/web3-wrapper";
-import { assert } from "@0x/assert";
-import * as ethers from "ethers";
+} from 'ethereum-types';
+import { BigNumber, classUtils, hexUtils, logUtils, providerUtils } from '@0x/utils';
+import { EventCallback, IndexedFilterValues, SimpleContractArtifact } from '@0x/types';
+import { Web3Wrapper } from '@0x/web3-wrapper';
+import { assert } from '@0x/assert';
+import * as ethers from 'ethers';
 // tslint:enable:no-unused-variable
 
 export type MerkleTreeControllerMiMC_BN128EventArgs =
@@ -50,19 +40,17 @@ export type MerkleTreeControllerMiMC_BN128EventArgs =
   | MerkleTreeControllerMiMC_BN128NewLeavesEventArgs;
 
 export enum MerkleTreeControllerMiMC_BN128Events {
-  NewLeaf = "NewLeaf",
-  NewLeaves = "NewLeaves",
+  NewLeaf = 'NewLeaf',
+  NewLeaves = 'NewLeaves',
 }
 
-export interface MerkleTreeControllerMiMC_BN128NewLeafEventArgs
-  extends DecodedLogArgs {
+export interface MerkleTreeControllerMiMC_BN128NewLeafEventArgs extends DecodedLogArgs {
   leafIndex: BigNumber;
   leafValue: string;
   root: string;
 }
 
-export interface MerkleTreeControllerMiMC_BN128NewLeavesEventArgs
-  extends DecodedLogArgs {
+export interface MerkleTreeControllerMiMC_BN128NewLeavesEventArgs extends DecodedLogArgs {
   minLeafIndex: BigNumber;
   leafValues: string[];
   root: string;
@@ -77,7 +65,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
    * @ignore
    */
   public static deployedBytecode: string | undefined;
-  public static contractName = "MerkleTreeControllerMiMC_BN128";
+  public static contractName = 'MerkleTreeControllerMiMC_BN128';
   private readonly _methodABIIndex: { [name: string]: number } = {};
   private readonly _subscriptionManager: SubscriptionManager<
     MerkleTreeControllerMiMC_BN128EventArgs,
@@ -89,15 +77,15 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     txDefaults: Partial<TxData>,
     logDecodeDependencies: {
       [contractName: string]: ContractArtifact | SimpleContractArtifact;
-    }
+    },
   ): Promise<MerkleTreeControllerMiMC_BN128Contract> {
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
     ]);
     if (artifact.compilerOutput === undefined) {
-      throw new Error("Compiler output not found in the artifact file");
+      throw new Error('Compiler output not found in the artifact file');
     }
     const provider = providerUtils.standardizeOrThrow(supportedProvider);
     const bytecode = artifact.compilerOutput.evm.bytecode.object;
@@ -107,8 +95,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     } = {};
     if (Object.keys(logDecodeDependencies) !== undefined) {
       for (const key of Object.keys(logDecodeDependencies)) {
-        logDecodeDependenciesAbiOnly[key] =
-          logDecodeDependencies[key].compilerOutput.abi;
+        logDecodeDependenciesAbiOnly[key] = logDecodeDependencies[key].compilerOutput.abi;
       }
     }
     return MerkleTreeControllerMiMC_BN128Contract.deployAsync(
@@ -116,7 +103,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       abi,
       provider,
       txDefaults,
-      logDecodeDependenciesAbiOnly
+      logDecodeDependenciesAbiOnly,
     );
   }
 
@@ -127,15 +114,15 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     txDefaults: Partial<TxData>,
     logDecodeDependencies: {
       [contractName: string]: ContractArtifact | SimpleContractArtifact;
-    }
+    },
   ): Promise<MerkleTreeControllerMiMC_BN128Contract> {
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
     ]);
     if (artifact.compilerOutput === undefined) {
-      throw new Error("Compiler output not found in the artifact file");
+      throw new Error('Compiler output not found in the artifact file');
     }
     const provider = providerUtils.standardizeOrThrow(supportedProvider);
     const abi = artifact.compilerOutput.abi;
@@ -144,15 +131,14 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     } = {};
     if (Object.keys(logDecodeDependencies) !== undefined) {
       for (const key of Object.keys(logDecodeDependencies)) {
-        logDecodeDependenciesAbiOnly[key] =
-          logDecodeDependencies[key].compilerOutput.abi;
+        logDecodeDependenciesAbiOnly[key] = logDecodeDependencies[key].compilerOutput.abi;
       }
     }
     const libraryAddresses = await MerkleTreeControllerMiMC_BN128Contract._deployLibrariesAsync(
       artifact,
       libraryArtifacts,
       new Web3Wrapper(provider),
-      txDefaults
+      txDefaults,
     );
     const bytecode = linkLibrariesInBytecode(artifact, libraryAddresses);
     return MerkleTreeControllerMiMC_BN128Contract.deployAsync(
@@ -160,7 +146,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       abi,
       provider,
       txDefaults,
-      logDecodeDependenciesAbiOnly
+      logDecodeDependenciesAbiOnly,
     );
   }
 
@@ -169,10 +155,10 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     abi: ContractAbi,
     supportedProvider: SupportedProvider,
     txDefaults: Partial<TxData>,
-    logDecodeDependencies: { [contractName: string]: ContractAbi }
+    logDecodeDependencies: { [contractName: string]: ContractAbi },
   ): Promise<MerkleTreeControllerMiMC_BN128Contract> {
-    assert.isHexString("bytecode", bytecode);
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.isHexString('bytecode', bytecode);
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
@@ -182,7 +168,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     [] = BaseContract._formatABIDataItemList(
       constructorAbi.inputs,
       [],
-      BaseContract._bigNumberToString
+      BaseContract._bigNumberToString,
     );
     const iface = new ethers.utils.Interface(abi);
     const deployInfo = iface.deployFunction;
@@ -193,19 +179,19 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
         data: txData,
         ...txDefaults,
       },
-      web3Wrapper.estimateGasAsync.bind(web3Wrapper)
+      web3Wrapper.estimateGasAsync.bind(web3Wrapper),
     );
     const txHash = await web3Wrapper.sendTransactionAsync(txDataWithDefaults);
     logUtils.log(`transactionHash: ${txHash}`);
     const txReceipt = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
     logUtils.log(
-      `MerkleTreeControllerMiMC_BN128 successfully deployed at ${txReceipt.contractAddress}`
+      `MerkleTreeControllerMiMC_BN128 successfully deployed at ${txReceipt.contractAddress}`,
     );
     const contractInstance = new MerkleTreeControllerMiMC_BN128Contract(
       txReceipt.contractAddress as string,
       provider,
       txDefaults,
-      logDecodeDependencies
+      logDecodeDependencies,
     );
     contractInstance.constructorArgs = [];
     return contractInstance;
@@ -219,313 +205,313 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       {
         constant: true,
         inputs: [],
-        name: "treeHeight",
+        name: 'treeHeight',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_msgs",
-            type: "uint256[]",
+            name: 'in_msgs',
+            type: 'uint256[]',
           },
           {
-            name: "in_key",
-            type: "uint256",
+            name: 'in_key',
+            type: 'uint256',
           },
         ],
-        name: "Hash",
+        name: 'Hash',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "leafIndex",
-            type: "uint256",
+            name: 'leafIndex',
+            type: 'uint256',
           },
         ],
-        name: "getFrontierSlot",
+        name: 'getFrontierSlot',
         outputs: [
           {
-            name: "slot",
-            type: "uint256",
+            name: 'slot',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [],
-        name: "leafCount",
+        name: 'leafCount',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_msgs",
-            type: "bytes32[2]",
+            name: 'in_msgs',
+            type: 'bytes32[2]',
           },
         ],
-        name: "mimcHash2",
+        name: 'mimcHash2',
         outputs: [
           {
-            name: "",
-            type: "bytes32",
+            name: '',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: false,
         inputs: [
           {
-            name: "leafValue",
-            type: "bytes32",
+            name: 'leafValue',
+            type: 'bytes32',
           },
         ],
-        name: "insertLeaf",
+        name: 'insertLeaf',
         outputs: [
           {
-            name: "root",
-            type: "bytes32",
+            name: 'root',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [],
-        name: "treeWidth",
+        name: 'treeWidth',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [],
-        name: "owner",
+        name: 'owner',
         outputs: [
           {
-            name: "",
-            type: "address",
+            name: '',
+            type: 'address',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_x",
-            type: "uint256",
+            name: 'in_x',
+            type: 'uint256',
           },
           {
-            name: "in_k",
-            type: "uint256",
+            name: 'in_k',
+            type: 'uint256',
           },
         ],
-        name: "Encipher",
+        name: 'Encipher',
         outputs: [
           {
-            name: "out_x",
-            type: "uint256",
+            name: 'out_x',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_msgs",
-            type: "bytes32[]",
+            name: 'in_msgs',
+            type: 'bytes32[]',
           },
         ],
-        name: "mimcHash",
+        name: 'mimcHash',
         outputs: [
           {
-            name: "",
-            type: "bytes32",
+            name: '',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "index_0",
-            type: "bytes32",
+            name: 'index_0',
+            type: 'bytes32',
           },
         ],
-        name: "roots",
+        name: 'roots',
         outputs: [
           {
-            name: "",
-            type: "bytes32",
+            name: '',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [],
-        name: "latestRoot",
+        name: 'latestRoot',
         outputs: [
           {
-            name: "",
-            type: "bytes32",
+            name: '',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: false,
         inputs: [
           {
-            name: "leafValues",
-            type: "bytes32[]",
+            name: 'leafValues',
+            type: 'bytes32[]',
           },
         ],
-        name: "insertLeaves",
+        name: 'insertLeaves',
         outputs: [
           {
-            name: "root",
-            type: "bytes32",
+            name: 'root',
+            type: 'bytes32',
           },
         ],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
       {
         inputs: [],
         outputs: [],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "constructor",
+        stateMutability: 'nonpayable',
+        type: 'constructor',
       },
       {
         anonymous: false,
         inputs: [
           {
-            name: "leafIndex",
-            type: "uint256",
+            name: 'leafIndex',
+            type: 'uint256',
             indexed: false,
           },
           {
-            name: "leafValue",
-            type: "bytes32",
+            name: 'leafValue',
+            type: 'bytes32',
             indexed: false,
           },
           {
-            name: "root",
-            type: "bytes32",
+            name: 'root',
+            type: 'bytes32',
             indexed: false,
           },
         ],
-        name: "NewLeaf",
+        name: 'NewLeaf',
         outputs: [],
-        type: "event",
+        type: 'event',
       },
       {
         anonymous: false,
         inputs: [
           {
-            name: "minLeafIndex",
-            type: "uint256",
+            name: 'minLeafIndex',
+            type: 'uint256',
             indexed: false,
           },
           {
-            name: "leafValues",
-            type: "bytes32[]",
+            name: 'leafValues',
+            type: 'bytes32[]',
             indexed: false,
           },
           {
-            name: "root",
-            type: "bytes32",
+            name: 'root',
+            type: 'bytes32',
             indexed: false,
           },
         ],
-        name: "NewLeaves",
+        name: 'NewLeaves',
         outputs: [],
-        type: "event",
+        type: 'event',
       },
       {
         constant: false,
         inputs: [
           {
-            name: "leafValue",
-            type: "bytes32",
+            name: 'leafValue',
+            type: 'bytes32',
           },
         ],
-        name: "_insertLeaf",
+        name: '_insertLeaf',
         outputs: [],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
       {
         constant: false,
         inputs: [
           {
-            name: "leafValues",
-            type: "bytes32[]",
+            name: 'leafValues',
+            type: 'bytes32[]',
           },
         ],
-        name: "_insertLeaves",
+        name: '_insertLeaves',
         outputs: [],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
     ] as ContractAbi;
     return abi;
@@ -536,7 +522,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     libraryArtifacts: { [libraryName: string]: ContractArtifact },
     web3Wrapper: Web3Wrapper,
     txDefaults: Partial<TxData>,
-    libraryAddresses: { [libraryName: string]: string } = {}
+    libraryAddresses: { [libraryName: string]: string } = {},
   ): Promise<{ [libraryName: string]: string }> {
     const links = artifact.compilerOutput.evm.bytecode.linkReferences;
     // Go through all linked libraries, recursively deploying them if necessary.
@@ -546,9 +532,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
           // Library not yet deployed.
           const libraryArtifact = libraryArtifacts[libraryName];
           if (!libraryArtifact) {
-            throw new Error(
-              `Missing artifact for linked library "${libraryName}"`
-            );
+            throw new Error(`Missing artifact for linked library "${libraryName}"`);
           }
           // Deploy any dependent libraries used by this library.
           await MerkleTreeControllerMiMC_BN128Contract._deployLibrariesAsync(
@@ -556,33 +540,24 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
             libraryArtifacts,
             web3Wrapper,
             txDefaults,
-            libraryAddresses
+            libraryAddresses,
           );
           // Deploy this library.
-          const linkedLibraryBytecode = linkLibrariesInBytecode(
-            libraryArtifact,
-            libraryAddresses
-          );
+          const linkedLibraryBytecode = linkLibrariesInBytecode(libraryArtifact, libraryAddresses);
           const txDataWithDefaults = await BaseContract._applyDefaultsToContractTxDataAsync(
             {
               data: linkedLibraryBytecode,
               ...txDefaults,
             },
-            web3Wrapper.estimateGasAsync.bind(web3Wrapper)
+            web3Wrapper.estimateGasAsync.bind(web3Wrapper),
           );
-          const txHash = await web3Wrapper.sendTransactionAsync(
-            txDataWithDefaults
-          );
+          const txHash = await web3Wrapper.sendTransactionAsync(txDataWithDefaults);
           logUtils.log(`transactionHash: ${txHash}`);
-          const {
-            contractAddress,
-          } = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
+          const { contractAddress } = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
           logUtils.log(
-            `${libraryArtifact.contractName} successfully deployed at ${contractAddress}`
+            `${libraryArtifact.contractName} successfully deployed at ${contractAddress}`,
           );
-          libraryAddresses[
-            libraryArtifact.contractName
-          ] = contractAddress as string;
+          libraryAddresses[libraryArtifact.contractName] = contractAddress as string;
         }
       }
     }
@@ -591,17 +566,12 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
 
   public getFunctionSignature(methodName: string): string {
     const index = this._methodABIIndex[methodName];
-    const methodAbi = MerkleTreeControllerMiMC_BN128Contract.ABI()[
-      index
-    ] as MethodAbi; // tslint:disable-line:no-unnecessary-type-assertion
+    const methodAbi = MerkleTreeControllerMiMC_BN128Contract.ABI()[index] as MethodAbi; // tslint:disable-line:no-unnecessary-type-assertion
     const functionSignature = methodAbiToFunctionSignature(methodAbi);
     return functionSignature;
   }
 
-  public getABIDecodedTransactionData<T>(
-    methodName: string,
-    callData: string
-  ): T {
+  public getABIDecodedTransactionData<T>(methodName: string, callData: string): T {
     const functionSignature = this.getFunctionSignature(methodName);
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
     const abiEncoder = self._lookupAbiEncoder(functionSignature);
@@ -626,23 +596,20 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
 
   public treeHeight(): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    const functionSignature = "treeHeight()";
+    const functionSignature = 'treeHeight()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -650,74 +617,58 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
     };
   }
-  public Hash(
-    in_msgs: BigNumber[],
-    in_key: BigNumber
-  ): ContractFunctionObj<BigNumber> {
+  public Hash(in_msgs: BigNumber[], in_key: BigNumber): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isArray("in_msgs", in_msgs);
-    assert.isBigNumber("in_key", in_key);
-    const functionSignature = "Hash(uint256[],uint256)";
+    assert.isArray('in_msgs', in_msgs);
+    assert.isBigNumber('in_key', in_key);
+    const functionSignature = 'Hash(uint256[],uint256)';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
-        return self._strictEncodeArguments(functionSignature, [
-          in_msgs,
-          in_key,
-        ]);
+        return self._strictEncodeArguments(functionSignature, [in_msgs, in_key]);
       },
     };
   }
   public getFrontierSlot(leafIndex: BigNumber): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isBigNumber("leafIndex", leafIndex);
-    const functionSignature = "getFrontierSlot(uint256)";
+    assert.isBigNumber('leafIndex', leafIndex);
+    const functionSignature = 'getFrontierSlot(uint256)';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -727,23 +678,20 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public leafCount(): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    const functionSignature = "leafCount()";
+    const functionSignature = 'leafCount()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -753,31 +701,26 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public mimcHash2(in_msgs: string[]): ContractFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isArray("in_msgs", in_msgs);
-    const functionSignature = "mimcHash2(bytes32[2])";
+    assert.isArray('in_msgs', in_msgs);
+    const functionSignature = 'mimcHash2(bytes32[2])';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -787,17 +730,17 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public insertLeaf(leafValue: string): ContractTxFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isString("leafValue", leafValue);
-    const functionSignature = "insertLeaf(bytes32)";
+    assert.isString('leafValue', leafValue);
+    const functionSignature = 'insertLeaf(bytes32)';
 
     return {
       async sendTransactionAsync(
         txData?: Partial<TxData> | undefined,
-        opts: SendTransactionOpts = { shouldValidate: true }
+        opts: SendTransactionOpts = { shouldValidate: true },
       ): Promise<string> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
           { data: this.getABIEncodedTransactionData(), ...txData },
-          this.estimateGasAsync.bind(this)
+          this.estimateGasAsync.bind(this),
         );
         if (opts.shouldValidate !== false) {
           await this.callAsync(txDataWithDefaults);
@@ -806,16 +749,11 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       awaitTransactionSuccessAsync(
         txData?: Partial<TxData>,
-        opts: AwaitTransactionSuccessOpts = { shouldValidate: true }
+        opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
       ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-        return self._promiseWithTransactionHash(
-          this.sendTransactionAsync(txData, opts),
-          opts
-        );
+        return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
       },
-      async estimateGasAsync(
-        txData?: Partial<TxData> | undefined
-      ): Promise<number> {
+      async estimateGasAsync(txData?: Partial<TxData> | undefined): Promise<number> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync({
           data: this.getABIEncodedTransactionData(),
           ...txData,
@@ -824,18 +762,15 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -845,23 +780,20 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public treeWidth(): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    const functionSignature = "treeWidth()";
+    const functionSignature = 'treeWidth()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -871,23 +803,20 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public owner(): ContractFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    const functionSignature = "owner()";
+    const functionSignature = 'owner()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -895,37 +824,29 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
     };
   }
-  public Encipher(
-    in_x: BigNumber,
-    in_k: BigNumber
-  ): ContractFunctionObj<BigNumber> {
+  public Encipher(in_x: BigNumber, in_k: BigNumber): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isBigNumber("in_x", in_x);
-    assert.isBigNumber("in_k", in_k);
-    const functionSignature = "Encipher(uint256,uint256)";
+    assert.isBigNumber('in_x', in_x);
+    assert.isBigNumber('in_k', in_k);
+    const functionSignature = 'Encipher(uint256,uint256)';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -935,31 +856,26 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public mimcHash(in_msgs: string[]): ContractFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isArray("in_msgs", in_msgs);
-    const functionSignature = "mimcHash(bytes32[])";
+    assert.isArray('in_msgs', in_msgs);
+    const functionSignature = 'mimcHash(bytes32[])';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -969,24 +885,21 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public roots(index_0: string): ContractFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isString("index_0", index_0);
-    const functionSignature = "roots(bytes32)";
+    assert.isString('index_0', index_0);
+    const functionSignature = 'roots(bytes32)';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -996,23 +909,20 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public latestRoot(): ContractFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    const functionSignature = "latestRoot()";
+    const functionSignature = 'latestRoot()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -1022,17 +932,17 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public insertLeaves(leafValues: string[]): ContractTxFunctionObj<string> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isArray("leafValues", leafValues);
-    const functionSignature = "insertLeaves(bytes32[])";
+    assert.isArray('leafValues', leafValues);
+    const functionSignature = 'insertLeaves(bytes32[])';
 
     return {
       async sendTransactionAsync(
         txData?: Partial<TxData> | undefined,
-        opts: SendTransactionOpts = { shouldValidate: true }
+        opts: SendTransactionOpts = { shouldValidate: true },
       ): Promise<string> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
           { data: this.getABIEncodedTransactionData(), ...txData },
-          this.estimateGasAsync.bind(this)
+          this.estimateGasAsync.bind(this),
         );
         if (opts.shouldValidate !== false) {
           await this.callAsync(txDataWithDefaults);
@@ -1041,16 +951,11 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       awaitTransactionSuccessAsync(
         txData?: Partial<TxData>,
-        opts: AwaitTransactionSuccessOpts = { shouldValidate: true }
+        opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
       ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-        return self._promiseWithTransactionHash(
-          this.sendTransactionAsync(txData, opts),
-          opts
-        );
+        return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
       },
-      async estimateGasAsync(
-        txData?: Partial<TxData> | undefined
-      ): Promise<number> {
+      async estimateGasAsync(txData?: Partial<TxData> | undefined): Promise<number> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync({
           data: this.getABIEncodedTransactionData(),
           ...txData,
@@ -1059,18 +964,15 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<string> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<string>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -1080,17 +982,17 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public _insertLeaf(leafValue: string): ContractTxFunctionObj<void> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isString("leafValue", leafValue);
-    const functionSignature = "_insertLeaf(bytes32)";
+    assert.isString('leafValue', leafValue);
+    const functionSignature = '_insertLeaf(bytes32)';
 
     return {
       async sendTransactionAsync(
         txData?: Partial<TxData> | undefined,
-        opts: SendTransactionOpts = { shouldValidate: true }
+        opts: SendTransactionOpts = { shouldValidate: true },
       ): Promise<string> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
           { data: this.getABIEncodedTransactionData(), ...txData },
-          this.estimateGasAsync.bind(this)
+          this.estimateGasAsync.bind(this),
         );
         if (opts.shouldValidate !== false) {
           await this.callAsync(txDataWithDefaults);
@@ -1099,36 +1001,25 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       awaitTransactionSuccessAsync(
         txData?: Partial<TxData>,
-        opts: AwaitTransactionSuccessOpts = { shouldValidate: true }
+        opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
       ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-        return self._promiseWithTransactionHash(
-          this.sendTransactionAsync(txData, opts),
-          opts
-        );
+        return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
       },
-      async estimateGasAsync(
-        txData?: Partial<TxData> | undefined
-      ): Promise<number> {
+      async estimateGasAsync(txData?: Partial<TxData> | undefined): Promise<number> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync({
           data: this.getABIEncodedTransactionData(),
           ...txData,
         });
         return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
       },
-      async callAsync(
-        callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
-      ): Promise<void> {
+      async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<void>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -1138,17 +1029,17 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
   }
   public _insertLeaves(leafValues: string[]): ContractTxFunctionObj<void> {
     const self = (this as any) as MerkleTreeControllerMiMC_BN128Contract;
-    assert.isArray("leafValues", leafValues);
-    const functionSignature = "_insertLeaves(bytes32[])";
+    assert.isArray('leafValues', leafValues);
+    const functionSignature = '_insertLeaves(bytes32[])';
 
     return {
       async sendTransactionAsync(
         txData?: Partial<TxData> | undefined,
-        opts: SendTransactionOpts = { shouldValidate: true }
+        opts: SendTransactionOpts = { shouldValidate: true },
       ): Promise<string> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
           { data: this.getABIEncodedTransactionData(), ...txData },
-          this.estimateGasAsync.bind(this)
+          this.estimateGasAsync.bind(this),
         );
         if (opts.shouldValidate !== false) {
           await this.callAsync(txDataWithDefaults);
@@ -1157,36 +1048,25 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       },
       awaitTransactionSuccessAsync(
         txData?: Partial<TxData>,
-        opts: AwaitTransactionSuccessOpts = { shouldValidate: true }
+        opts: AwaitTransactionSuccessOpts = { shouldValidate: true },
       ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs> {
-        return self._promiseWithTransactionHash(
-          this.sendTransactionAsync(txData, opts),
-          opts
-        );
+        return self._promiseWithTransactionHash(this.sendTransactionAsync(txData, opts), opts);
       },
-      async estimateGasAsync(
-        txData?: Partial<TxData> | undefined
-      ): Promise<number> {
+      async estimateGasAsync(txData?: Partial<TxData> | undefined): Promise<number> {
         const txDataWithDefaults = await self._applyDefaultsToTxDataAsync({
           data: this.getABIEncodedTransactionData(),
           ...txData,
         });
         return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
       },
-      async callAsync(
-        callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
-      ): Promise<void> {
+      async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<void>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -1209,19 +1089,15 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     indexFilterValues: IndexedFilterValues,
     callback: EventCallback<ArgsType>,
     isVerbose: boolean = false,
-    blockPollingIntervalMs?: number
+    blockPollingIntervalMs?: number,
   ): string {
-    assert.doesBelongToStringEnum(
-      "eventName",
-      eventName,
-      MerkleTreeControllerMiMC_BN128Events
-    );
+    assert.doesBelongToStringEnum('eventName', eventName, MerkleTreeControllerMiMC_BN128Events);
     assert.doesConformToSchema(
-      "indexFilterValues",
+      'indexFilterValues',
       indexFilterValues,
-      schemas.indexFilterValuesSchema
+      schemas.indexFilterValuesSchema,
     );
-    assert.isFunction("callback", callback);
+    assert.isFunction('callback', callback);
     const subscriptionToken = this._subscriptionManager.subscribe<ArgsType>(
       this.address,
       eventName,
@@ -1229,7 +1105,7 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
       MerkleTreeControllerMiMC_BN128Contract.ABI(),
       callback,
       isVerbose,
-      blockPollingIntervalMs
+      blockPollingIntervalMs,
     );
     return subscriptionToken;
   }
@@ -1257,34 +1133,24 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
    * the value is the value you are interested in. E.g `{_from: aUserAddressHex}`
    * @return Array of logs that match the parameters
    */
-  public async getLogsAsync<
-    ArgsType extends MerkleTreeControllerMiMC_BN128EventArgs
-  >(
+  public async getLogsAsync<ArgsType extends MerkleTreeControllerMiMC_BN128EventArgs>(
     eventName: MerkleTreeControllerMiMC_BN128Events,
     blockRange: BlockRange,
-    indexFilterValues: IndexedFilterValues
+    indexFilterValues: IndexedFilterValues,
   ): Promise<Array<LogWithDecodedArgs<ArgsType>>> {
-    assert.doesBelongToStringEnum(
-      "eventName",
-      eventName,
-      MerkleTreeControllerMiMC_BN128Events
-    );
+    assert.doesBelongToStringEnum('eventName', eventName, MerkleTreeControllerMiMC_BN128Events);
+    assert.doesConformToSchema('blockRange', blockRange, schemas.blockRangeSchema);
     assert.doesConformToSchema(
-      "blockRange",
-      blockRange,
-      schemas.blockRangeSchema
-    );
-    assert.doesConformToSchema(
-      "indexFilterValues",
+      'indexFilterValues',
       indexFilterValues,
-      schemas.indexFilterValuesSchema
+      schemas.indexFilterValuesSchema,
     );
     const logs = await this._subscriptionManager.getLogsAsync<ArgsType>(
       this.address,
       eventName,
       blockRange,
       indexFilterValues,
-      MerkleTreeControllerMiMC_BN128Contract.ABI()
+      MerkleTreeControllerMiMC_BN128Contract.ABI(),
     );
     return logs;
   }
@@ -1294,30 +1160,24 @@ export class MerkleTreeControllerMiMC_BN128Contract extends BaseContract {
     supportedProvider: SupportedProvider,
     txDefaults?: Partial<TxData>,
     logDecodeDependencies?: { [contractName: string]: ContractAbi },
-    deployedBytecode:
-      | string
-      | undefined = MerkleTreeControllerMiMC_BN128Contract.deployedBytecode
+    deployedBytecode: string | undefined = MerkleTreeControllerMiMC_BN128Contract.deployedBytecode,
   ) {
     super(
-      "MerkleTreeControllerMiMC_BN128",
+      'MerkleTreeControllerMiMC_BN128',
       MerkleTreeControllerMiMC_BN128Contract.ABI(),
       address,
       supportedProvider,
       txDefaults,
       logDecodeDependencies,
-      deployedBytecode
+      deployedBytecode,
     );
-    classUtils.bindAll(this, [
-      "_abiEncoderByFunctionSignature",
-      "address",
-      "_web3Wrapper",
-    ]);
+    classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
     this._subscriptionManager = new SubscriptionManager<
       MerkleTreeControllerMiMC_BN128EventArgs,
       MerkleTreeControllerMiMC_BN128Events
     >(MerkleTreeControllerMiMC_BN128Contract.ABI(), this._web3Wrapper);
     MerkleTreeControllerMiMC_BN128Contract.ABI().forEach((item, index) => {
-      if (item.type === "function") {
+      if (item.type === 'function') {
         const methodAbi = item as MethodAbi;
         this._methodABIIndex[methodAbi.name] = index;
       }

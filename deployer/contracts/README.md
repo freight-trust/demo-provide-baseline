@@ -1,12 +1,14 @@
 # Example Contracts
 
-These contracts are provided to demonstrate deploying the merkle-tree contracts from this **external** (or 'remote') microservice.
+These contracts are provided to demonstrate deploying the merkle-tree contracts from this
+**external** (or 'remote') microservice.
 
-## Deployment locality  
+## Deployment locality
 
 To deploy from **this** 'remote' microservice:
 
-Before deploying, the contracts will need to be compiled (in order to generate the contracts' json interfaces in the `../build/contracts/` folder). The simplest way to do this is with truffle:
+Before deploying, the contracts will need to be compiled (in order to generate the contracts' json
+interfaces in the `../build/contracts/` folder). The simplest way to do this is with truffle:
 
 ```solidity
 cd path/to/deployer
@@ -16,7 +18,7 @@ truffle compile --all
 The contracts will then be deployed when this microservice is started with:  
 `docker-compose up`.
 
-## Assembly  
+## Assembly
 
 Here's an explanation of the hashing function used in the MerkleTree.sol contract:
 

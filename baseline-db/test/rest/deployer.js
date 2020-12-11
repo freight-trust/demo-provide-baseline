@@ -1,6 +1,6 @@
-import request from "request";
-import config from "config";
-import Web3 from "../../src/web3";
+import request from 'request';
+import config from 'config';
+import Web3 from '../../src/web3';
 
 const web3 = Web3.connect();
 
@@ -13,7 +13,7 @@ async function getContractInterface(contractName) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/contract/interface`,
-      method: "GET",
+      method: 'GET',
       json: true,
       body: { contractName },
     };
@@ -30,11 +30,11 @@ Gets the address of a deployed MerkleTree.sol contract from some external contra
 async function getContractAddress(contractName) {
   console.log(`\nCalling getContractAddress(${contractName})`);
   const url = `${config.deployer.host}:${config.deployer.port}`;
-  console.log("url:", url);
+  console.log('url:', url);
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/contract/address`,
-      method: "GET",
+      method: 'GET',
       json: true,
       body: { contractName },
     };
@@ -61,8 +61,8 @@ async function getContractInstance(contractName) {
     const contractInstance = await new web3.eth.Contract(abi, contractAddress);
 
     // console.log('\nMerkleTree.sol contract instance:\n', contractInstance);
-    if (typeof contractInstance === "undefined")
-      throw new Error("Could not retrieve contractInstance");
+    if (typeof contractInstance === 'undefined')
+      throw new Error('Could not retrieve contractInstance');
 
     return contractInstance;
   } catch (err) {

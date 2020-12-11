@@ -1,12 +1,14 @@
 # Example Contracts
 
-These contracts are provided to demonstrate deploying the merkle-tree contracts from this **external** (or 'remote') microservice.
+These contracts are provided to demonstrate deploying the merkle-tree contracts from this
+**external** (or 'remote') microservice.
 
 ## Deployment locality
 
 To deploy from **this** 'remote' microservice:
 
-Before deploying, the contracts will need to be compiled (in order to generate the contracts' json interfaces in the `../build/contracts/` folder). The simplest way to do this is with truffle:
+Before deploying, the contracts will need to be compiled (in order to generate the contracts' json
+interfaces in the `../build/contracts/` folder). The simplest way to do this is with truffle:
 
 ```solidity
 cd path/to/deployer

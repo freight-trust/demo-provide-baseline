@@ -6,7 +6,7 @@ services:
     image: trufflesuite/ganache-cli:latest
     command: ganache-cli --accounts=10 --defaultBalanceEther=1000 --gasLimit=10000000
     ports:
-      - "8545:8545"
+      - '8545:8545'
     networks:
       - merkle_tree_network
 
@@ -30,7 +30,7 @@ services:
       # - ./deployer/contracts/:/app/contracts:delegated # required if deploying contracts from within this service (if CONTRACT_ORIGIN = 'default')
       # - ./deployer/build/:/app/build # required if CONTRACT_ORIGIN = 'default'
     ports:
-      - "9000:80"
+      - '9000:80'
     environment:
       HASH_TYPE: 'sha' # sha or mimc
       #CURVE: 'BLS12_377' # BLS12_377 or ALT_BN128 (= default) (BW6 a future enhancement)

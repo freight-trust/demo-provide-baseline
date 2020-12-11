@@ -20,7 +20,7 @@ const batchSize = 100000;
 function to generate a promise that resolves to a string of hex
 @param {int} bytes - the number of bytes of hex that should be returned
 */
-const rndHex = bytes => {
+const rndHex = (bytes) => {
   const buf = crypto.randomBytes(bytes);
   return `0x${buf.toString('hex')}`;
 };
@@ -33,7 +33,9 @@ beforeEach('Redeploy contract', async () => {
 });
 
 // eslint-disable-next-line func-names
-describe(`Adding ${numberOfBatches * batchSize} leaves in batches of ${batchSize}`, async function() {
+describe(`Adding ${
+  numberOfBatches * batchSize
+} leaves in batches of ${batchSize}`, async function () {
   this.timeout(10000000); // surprisingly, this.timeout() doesn't work inside an arrow function!
 
   // await merkleTree.insertTreeHeight(contractName, treeHeight);

@@ -7,7 +7,7 @@
 // First we need to connect to a websocket provider.
 // Important Note: Subscribe method only works with a websocket provider!
 
-import Web3 from "./web3";
+import Web3 from './web3';
 
 const web3 = Web3.connect();
 
@@ -27,10 +27,7 @@ function getContractInstance(contractName, deployedAddress) {
   if (!deployedAddress) {
     contractInstance = new web3.eth.Contract(contractInterface.abi);
   } else {
-    contractInstance = new web3.eth.Contract(
-      contractInterface.abi,
-      deployedAddress
-    );
+    contractInstance = new web3.eth.Contract(contractInterface.abi, deployedAddress);
   }
   // console.log("\ncontractInstance:")
   // console.log(contractInstance)

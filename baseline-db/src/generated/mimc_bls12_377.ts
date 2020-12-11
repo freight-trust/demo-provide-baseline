@@ -10,8 +10,8 @@ import {
   PromiseWithTransactionHash,
   methodAbiToFunctionSignature,
   linkLibrariesInBytecode,
-} from "@0x/base-contract";
-import { schemas } from "@0x/json-schemas";
+} from '@0x/base-contract';
+import { schemas } from '@0x/json-schemas';
 import {
   BlockParam,
   BlockParamLiteral,
@@ -25,22 +25,12 @@ import {
   TxData,
   TxDataPayable,
   SupportedProvider,
-} from "ethereum-types";
-import {
-  BigNumber,
-  classUtils,
-  hexUtils,
-  logUtils,
-  providerUtils,
-} from "@0x/utils";
-import {
-  EventCallback,
-  IndexedFilterValues,
-  SimpleContractArtifact,
-} from "@0x/types";
-import { Web3Wrapper } from "@0x/web3-wrapper";
-import { assert } from "@0x/assert";
-import * as ethers from "ethers";
+} from 'ethereum-types';
+import { BigNumber, classUtils, hexUtils, logUtils, providerUtils } from '@0x/utils';
+import { EventCallback, IndexedFilterValues, SimpleContractArtifact } from '@0x/types';
+import { Web3Wrapper } from '@0x/web3-wrapper';
+import { assert } from '@0x/assert';
+import * as ethers from 'ethers';
 // tslint:enable:no-unused-variable
 
 /* istanbul ignore next */
@@ -52,7 +42,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
    * @ignore
    */
   public static deployedBytecode: string | undefined;
-  public static contractName = "MiMC_BLS12_377";
+  public static contractName = 'MiMC_BLS12_377';
   private readonly _methodABIIndex: { [name: string]: number } = {};
   public static async deployFrom0xArtifactAsync(
     artifact: ContractArtifact | SimpleContractArtifact,
@@ -60,15 +50,15 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     txDefaults: Partial<TxData>,
     logDecodeDependencies: {
       [contractName: string]: ContractArtifact | SimpleContractArtifact;
-    }
+    },
   ): Promise<MiMC_BLS12_377Contract> {
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
     ]);
     if (artifact.compilerOutput === undefined) {
-      throw new Error("Compiler output not found in the artifact file");
+      throw new Error('Compiler output not found in the artifact file');
     }
     const provider = providerUtils.standardizeOrThrow(supportedProvider);
     const bytecode = artifact.compilerOutput.evm.bytecode.object;
@@ -78,8 +68,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     } = {};
     if (Object.keys(logDecodeDependencies) !== undefined) {
       for (const key of Object.keys(logDecodeDependencies)) {
-        logDecodeDependenciesAbiOnly[key] =
-          logDecodeDependencies[key].compilerOutput.abi;
+        logDecodeDependenciesAbiOnly[key] = logDecodeDependencies[key].compilerOutput.abi;
       }
     }
     return MiMC_BLS12_377Contract.deployAsync(
@@ -87,7 +76,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
       abi,
       provider,
       txDefaults,
-      logDecodeDependenciesAbiOnly
+      logDecodeDependenciesAbiOnly,
     );
   }
 
@@ -98,15 +87,15 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     txDefaults: Partial<TxData>,
     logDecodeDependencies: {
       [contractName: string]: ContractArtifact | SimpleContractArtifact;
-    }
+    },
   ): Promise<MiMC_BLS12_377Contract> {
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
     ]);
     if (artifact.compilerOutput === undefined) {
-      throw new Error("Compiler output not found in the artifact file");
+      throw new Error('Compiler output not found in the artifact file');
     }
     const provider = providerUtils.standardizeOrThrow(supportedProvider);
     const abi = artifact.compilerOutput.abi;
@@ -115,15 +104,14 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     } = {};
     if (Object.keys(logDecodeDependencies) !== undefined) {
       for (const key of Object.keys(logDecodeDependencies)) {
-        logDecodeDependenciesAbiOnly[key] =
-          logDecodeDependencies[key].compilerOutput.abi;
+        logDecodeDependenciesAbiOnly[key] = logDecodeDependencies[key].compilerOutput.abi;
       }
     }
     const libraryAddresses = await MiMC_BLS12_377Contract._deployLibrariesAsync(
       artifact,
       libraryArtifacts,
       new Web3Wrapper(provider),
-      txDefaults
+      txDefaults,
     );
     const bytecode = linkLibrariesInBytecode(artifact, libraryAddresses);
     return MiMC_BLS12_377Contract.deployAsync(
@@ -131,7 +119,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
       abi,
       provider,
       txDefaults,
-      logDecodeDependenciesAbiOnly
+      logDecodeDependenciesAbiOnly,
     );
   }
 
@@ -140,10 +128,10 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     abi: ContractAbi,
     supportedProvider: SupportedProvider,
     txDefaults: Partial<TxData>,
-    logDecodeDependencies: { [contractName: string]: ContractAbi }
+    logDecodeDependencies: { [contractName: string]: ContractAbi },
   ): Promise<MiMC_BLS12_377Contract> {
-    assert.isHexString("bytecode", bytecode);
-    assert.doesConformToSchema("txDefaults", txDefaults, schemas.txDataSchema, [
+    assert.isHexString('bytecode', bytecode);
+    assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
       schemas.addressSchema,
       schemas.numberSchema,
       schemas.jsNumber,
@@ -153,7 +141,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     [] = BaseContract._formatABIDataItemList(
       constructorAbi.inputs,
       [],
-      BaseContract._bigNumberToString
+      BaseContract._bigNumberToString,
     );
     const iface = new ethers.utils.Interface(abi);
     const deployInfo = iface.deployFunction;
@@ -164,19 +152,17 @@ export class MiMC_BLS12_377Contract extends BaseContract {
         data: txData,
         ...txDefaults,
       },
-      web3Wrapper.estimateGasAsync.bind(web3Wrapper)
+      web3Wrapper.estimateGasAsync.bind(web3Wrapper),
     );
     const txHash = await web3Wrapper.sendTransactionAsync(txDataWithDefaults);
     logUtils.log(`transactionHash: ${txHash}`);
     const txReceipt = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
-    logUtils.log(
-      `MiMC_BLS12_377 successfully deployed at ${txReceipt.contractAddress}`
-    );
+    logUtils.log(`MiMC_BLS12_377 successfully deployed at ${txReceipt.contractAddress}`);
     const contractInstance = new MiMC_BLS12_377Contract(
       txReceipt.contractAddress as string,
       provider,
       txDefaults,
-      logDecodeDependencies
+      logDecodeDependencies,
     );
     contractInstance.constructorArgs = [];
     return contractInstance;
@@ -190,54 +176,54 @@ export class MiMC_BLS12_377Contract extends BaseContract {
       {
         constant: true,
         inputs: [],
-        name: "zero",
+        name: 'zero',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_msgs",
-            type: "uint256[]",
+            name: 'in_msgs',
+            type: 'uint256[]',
           },
         ],
-        name: "mimc_bls12_377",
+        name: 'mimc_bls12_377',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
       {
         constant: true,
         inputs: [
           {
-            name: "in_msgs",
-            type: "uint256[]",
+            name: 'in_msgs',
+            type: 'uint256[]',
           },
         ],
-        name: "mimcHash",
+        name: 'mimcHash',
         outputs: [
           {
-            name: "",
-            type: "uint256",
+            name: '',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "pure",
-        type: "function",
+        stateMutability: 'pure',
+        type: 'function',
       },
     ] as ContractAbi;
     return abi;
@@ -248,7 +234,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     libraryArtifacts: { [libraryName: string]: ContractArtifact },
     web3Wrapper: Web3Wrapper,
     txDefaults: Partial<TxData>,
-    libraryAddresses: { [libraryName: string]: string } = {}
+    libraryAddresses: { [libraryName: string]: string } = {},
   ): Promise<{ [libraryName: string]: string }> {
     const links = artifact.compilerOutput.evm.bytecode.linkReferences;
     // Go through all linked libraries, recursively deploying them if necessary.
@@ -258,9 +244,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
           // Library not yet deployed.
           const libraryArtifact = libraryArtifacts[libraryName];
           if (!libraryArtifact) {
-            throw new Error(
-              `Missing artifact for linked library "${libraryName}"`
-            );
+            throw new Error(`Missing artifact for linked library "${libraryName}"`);
           }
           // Deploy any dependent libraries used by this library.
           await MiMC_BLS12_377Contract._deployLibrariesAsync(
@@ -268,33 +252,24 @@ export class MiMC_BLS12_377Contract extends BaseContract {
             libraryArtifacts,
             web3Wrapper,
             txDefaults,
-            libraryAddresses
+            libraryAddresses,
           );
           // Deploy this library.
-          const linkedLibraryBytecode = linkLibrariesInBytecode(
-            libraryArtifact,
-            libraryAddresses
-          );
+          const linkedLibraryBytecode = linkLibrariesInBytecode(libraryArtifact, libraryAddresses);
           const txDataWithDefaults = await BaseContract._applyDefaultsToContractTxDataAsync(
             {
               data: linkedLibraryBytecode,
               ...txDefaults,
             },
-            web3Wrapper.estimateGasAsync.bind(web3Wrapper)
+            web3Wrapper.estimateGasAsync.bind(web3Wrapper),
           );
-          const txHash = await web3Wrapper.sendTransactionAsync(
-            txDataWithDefaults
-          );
+          const txHash = await web3Wrapper.sendTransactionAsync(txDataWithDefaults);
           logUtils.log(`transactionHash: ${txHash}`);
-          const {
-            contractAddress,
-          } = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
+          const { contractAddress } = await web3Wrapper.awaitTransactionSuccessAsync(txHash);
           logUtils.log(
-            `${libraryArtifact.contractName} successfully deployed at ${contractAddress}`
+            `${libraryArtifact.contractName} successfully deployed at ${contractAddress}`,
           );
-          libraryAddresses[
-            libraryArtifact.contractName
-          ] = contractAddress as string;
+          libraryAddresses[libraryArtifact.contractName] = contractAddress as string;
         }
       }
     }
@@ -308,10 +283,7 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     return functionSignature;
   }
 
-  public getABIDecodedTransactionData<T>(
-    methodName: string,
-    callData: string
-  ): T {
+  public getABIDecodedTransactionData<T>(methodName: string, callData: string): T {
     const functionSignature = this.getFunctionSignature(methodName);
     const self = (this as any) as MiMC_BLS12_377Contract;
     const abiEncoder = self._lookupAbiEncoder(functionSignature);
@@ -336,23 +308,20 @@ export class MiMC_BLS12_377Contract extends BaseContract {
 
   public zero(): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MiMC_BLS12_377Contract;
-    const functionSignature = "zero()";
+    const functionSignature = 'zero()';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         const rawCallResult = await self._performCallAsync(
           { data: this.getABIEncodedTransactionData(), ...callData },
-          defaultBlock
+          defaultBlock,
         );
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -362,31 +331,26 @@ export class MiMC_BLS12_377Contract extends BaseContract {
   }
   public mimc_bls12_377(in_msgs: BigNumber[]): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MiMC_BLS12_377Contract;
-    assert.isArray("in_msgs", in_msgs);
-    const functionSignature = "mimc_bls12_377(uint256[])";
+    assert.isArray('in_msgs', in_msgs);
+    const functionSignature = 'mimc_bls12_377(uint256[])';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -396,31 +360,26 @@ export class MiMC_BLS12_377Contract extends BaseContract {
   }
   public mimcHash(in_msgs: BigNumber[]): ContractFunctionObj<BigNumber> {
     const self = (this as any) as MiMC_BLS12_377Contract;
-    assert.isArray("in_msgs", in_msgs);
-    const functionSignature = "mimcHash(uint256[])";
+    assert.isArray('in_msgs', in_msgs);
+    const functionSignature = 'mimcHash(uint256[])';
 
     return {
       async callAsync(
         callData: Partial<CallData> = {},
-        defaultBlock?: BlockParam
+        defaultBlock?: BlockParam,
       ): Promise<BigNumber> {
         BaseContract._assertCallParams(callData, defaultBlock);
         let rawCallResult;
         if (self._deployedBytecodeIfExists) {
-          rawCallResult = await self._evmExecAsync(
-            this.getABIEncodedTransactionData()
-          );
+          rawCallResult = await self._evmExecAsync(this.getABIEncodedTransactionData());
         } else {
           rawCallResult = await self._performCallAsync(
             { data: this.getABIEncodedTransactionData(), ...callData },
-            defaultBlock
+            defaultBlock,
           );
         }
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
-        BaseContract._throwIfUnexpectedEmptyCallResult(
-          rawCallResult,
-          abiEncoder
-        );
+        BaseContract._throwIfUnexpectedEmptyCallResult(rawCallResult, abiEncoder);
         return abiEncoder.strictDecodeReturnValue<BigNumber>(rawCallResult);
       },
       getABIEncodedTransactionData(): string {
@@ -434,26 +393,20 @@ export class MiMC_BLS12_377Contract extends BaseContract {
     supportedProvider: SupportedProvider,
     txDefaults?: Partial<TxData>,
     logDecodeDependencies?: { [contractName: string]: ContractAbi },
-    deployedBytecode:
-      | string
-      | undefined = MiMC_BLS12_377Contract.deployedBytecode
+    deployedBytecode: string | undefined = MiMC_BLS12_377Contract.deployedBytecode,
   ) {
     super(
-      "MiMC_BLS12_377",
+      'MiMC_BLS12_377',
       MiMC_BLS12_377Contract.ABI(),
       address,
       supportedProvider,
       txDefaults,
       logDecodeDependencies,
-      deployedBytecode
+      deployedBytecode,
     );
-    classUtils.bindAll(this, [
-      "_abiEncoderByFunctionSignature",
-      "address",
-      "_web3Wrapper",
-    ]);
+    classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
     MiMC_BLS12_377Contract.ABI().forEach((item, index) => {
-      if (item.type === "function") {
+      if (item.type === 'function') {
         const methodAbi = item as MethodAbi;
         this._methodABIIndex[methodAbi.name] = index;
       }

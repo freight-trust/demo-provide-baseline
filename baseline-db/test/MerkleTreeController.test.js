@@ -3,9 +3,9 @@
 */
 
 // import assert from 'assert';
-import config from "config";
-import Web3 from "../src/web3";
-import deployer from "./rest/deployer";
+import config from 'config';
+import Web3 from '../src/web3';
+import deployer from './rest/deployer';
 
 const web3 = Web3.connect();
 
@@ -17,7 +17,7 @@ const numberOfBatches = 1;
 const batchSize = 128;
 
 describe(`${contractName}`, async () => {
-  before("get contractInstance", async () => {
+  before('get contractInstance', async () => {
     if (!(await Web3.isConnected())) await Web3.connection();
 
     coinbase = await web3.eth.getCoinbase();
@@ -40,38 +40,34 @@ describe(`${contractName}`, async () => {
     let range;
 
     it(`hashes correctly`, async () => {
-      if (process.env.HASH_TYPE === "mimc") {
+      if (process.env.HASH_TYPE === 'mimc') {
         let txReceipt;
         for (let i = 0; i < 32; i += 1) {
-          if (process.env.CURVE === "BLS12_377") {
+          if (process.env.CURVE === 'BLS12_377') {
             // eslint-disable-next-line no-await-in-loop
-            txReceipt = await contractInstance.methods
-              .mimcHash([i, i + 1])
-              .send({
-                from: coinbase,
-                gas: config.web3.options.defaultGas,
-                gasPrice: config.web3.options.defaultGasPrice,
-              });
+            txReceipt = await contractInstance.methods.mimcHash([i, i + 1]).send({
+              from: coinbase,
+              gas: config.web3.options.defaultGas,
+              gasPrice: config.web3.options.defaultGasPrice,
+            });
           } else {
             // eslint-disable-next-line no-await-in-loop
-            txReceipt = await contractInstance.methods
-              .mimcHash2(i, i + 1)
-              .send({
-                from: coinbase,
-                gas: config.web3.options.defaultGas,
-                gasPrice: config.web3.options.defaultGasPrice,
-              });
+            txReceipt = await contractInstance.methods.mimcHash2(i, i + 1).send({
+              from: coinbase,
+              gas: config.web3.options.defaultGas,
+              gasPrice: config.web3.options.defaultGasPrice,
+            });
           }
           const { gasUsed } = txReceipt;
           gasUsedArray.push(gasUsed);
         }
       } else {
-        console.log("This test is disabled for SHA hashing.");
+        console.log('This test is disabled for SHA hashing.');
       }
     });
 
-    if (process.env.HASH_TYPE === "mimc") {
-      after("provide summary stats", async () => {
+    if (process.env.HASH_TYPE === 'mimc') {
+      after('provide summary stats', async () => {
         totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
         max = Math.max(...gasUsedArray);
         min = Math.min(...gasUsedArray);
@@ -80,12 +76,12 @@ describe(`${contractName}`, async () => {
         range = max - min;
         // console.log('gasUsedArray:');
         // console.dir(gasUsedArray, { maxArrayLength: null });
-        console.log("totalGasUsed:", totalGasUsed);
-        console.log("averageGasUsed:", averageGasUsed);
-        console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
-        console.log("min:", min);
-        console.log("max:", max);
-        console.log("range:", range);
+        console.log('totalGasUsed:', totalGasUsed);
+        console.log('averageGasUsed:', averageGasUsed);
+        console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
+        console.log('min:', min);
+        console.log('max:', max);
+        console.log('range:', range);
       });
     }
   });
@@ -106,7 +102,7 @@ describe(`${contractName}`, async () => {
 
     it(`adds one leaf at a time correctly`, async () => {
       for (let i = 0; i < batchSize; i += 1) {
-        const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+        const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
 
         // eslint-disable-next-line no-await-in-loop
         const txReceipt = await contractInstance.methods
@@ -117,18 +113,9 @@ describe(`${contractName}`, async () => {
             gasPrice: config.web3.options.defaultGasPrice,
           })
           // eslint-disable-next-line no-loop-func
-          .on("receipt", (receipt) => {
-            const {
-              leafIndex,
-              leafValue,
-              root,
-            } = receipt.events.NewLeaf.returnValues;
-            console.log(
-              "NewLeaf event returnValues:",
-              leafIndex,
-              leafValue,
-              root
-            );
+          .on('receipt', (receipt) => {
+            const { leafIndex, leafValue, root } = receipt.events.NewLeaf.returnValues;
+            console.log('NewLeaf event returnValues:', leafIndex, leafValue, root);
 
             // // For debugging the hash function:
             // const outputs = receipt.events.Output.map(event => {
@@ -142,21 +129,21 @@ describe(`${contractName}`, async () => {
       }
     });
 
-    after("provide summary stats", async () => {
+    after('provide summary stats', async () => {
       totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
       max = Math.max(...gasUsedArray);
       min = Math.min(...gasUsedArray);
       averageGasUsed = totalGasUsed / batchSize;
       averageGasUsedMinusTxCost = averageGasUsed - 21000;
       range = max - min;
-      console.log("gasUsedArray:");
+      console.log('gasUsedArray:');
       console.dir(gasUsedArray, { maxArrayLength: null });
-      console.log("totalGasUsed:", totalGasUsed);
-      console.log("averageGasUsed:", averageGasUsed);
-      console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
-      console.log("min:", min);
-      console.log("max:", max);
-      console.log("range:", range);
+      console.log('totalGasUsed:', totalGasUsed);
+      console.log('averageGasUsed:', averageGasUsed);
+      console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
+      console.log('min:', min);
+      console.log('max:', max);
+      console.log('range:', range);
     });
   });
 
@@ -173,7 +160,7 @@ describe(`${contractName}`, async () => {
       // create the leafValues to add:
       const leaves = [];
       for (let i = 0; i < batchSize; i += 1) {
-        const leaf = i.toString().padStart(64, "0"); // pad to 32 bytes
+        const leaf = i.toString().padStart(64, '0'); // pad to 32 bytes
         leaves.push(`0x${leaf}`);
       }
       // eslint-disable-next-line no-await-in-loop
@@ -185,19 +172,10 @@ describe(`${contractName}`, async () => {
           gasPrice: config.web3.options.defaultGasPrice,
         })
         // eslint-disable-next-line no-loop-func
-        .on("receipt", (receipt) => {
-          const {
-            minLeafIndex,
-            leafValues,
-            root,
-          } = receipt.events.NewLeaves.returnValues;
+        .on('receipt', (receipt) => {
+          const { minLeafIndex, leafValues, root } = receipt.events.NewLeaves.returnValues;
 
-          console.log(
-            "NewLeaves event returnValues:",
-            minLeafIndex,
-            leafValues,
-            root
-          );
+          console.log('NewLeaves event returnValues:', minLeafIndex, leafValues, root);
 
           // console.dir(receipt.events, { depth: null });
         });
@@ -206,15 +184,15 @@ describe(`${contractName}`, async () => {
       gasUsedArray.push(gasUsed);
     });
 
-    after("provide summary stats", async () => {
+    after('provide summary stats', async () => {
       totalGasUsed = gasUsedArray.reduce((acc, cur) => acc + cur);
       averageGasUsed = totalGasUsed / batchSize;
       averageGasUsedMinusTxCost = (totalGasUsed - 21000) / batchSize;
-      console.log("\ngasUsedArray:");
+      console.log('\ngasUsedArray:');
       console.dir(gasUsedArray, { maxArrayLength: null });
-      console.log("totalGasUsed:", totalGasUsed);
-      console.log("averageGasUsed:", averageGasUsed);
-      console.log("averageGasUsedMinusTxCost:", averageGasUsedMinusTxCost);
+      console.log('totalGasUsed:', totalGasUsed);
+      console.log('averageGasUsed:', averageGasUsed);
+      console.log('averageGasUsedMinusTxCost:', averageGasUsedMinusTxCost);
     });
   });
   //

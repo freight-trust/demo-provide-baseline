@@ -1,6 +1,6 @@
-import request from "request";
-import config from "config";
-import utilsPoll from "../utils-poll";
+import request from 'request';
+import config from 'config';
+import utilsPoll from '../utils-poll';
 
 const url = `${config.merkleTree.host}:${config.merkleTree.port}`;
 
@@ -12,7 +12,7 @@ async function startEventFilter(contractName) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/start`,
-      method: "POST",
+      method: 'POST',
       json: true,
       // headers: { contractName: contractName },
       body: { contractName },
@@ -28,13 +28,11 @@ async function startEventFilter(contractName) {
 Get the nodes on the sibling path from the given leafIndex to the root.
 */
 async function getSiblingPathByLeafIndex(contractName, leafIndex) {
-  console.log(
-    `\nCalling getSiblingPathByLeafIndex(${contractName}, ${leafIndex})`
-  );
+  console.log(`\nCalling getSiblingPathByLeafIndex(${contractName}, ${leafIndex})`);
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/siblingPath/${leafIndex}`,
-      method: "POST",
+      method: 'POST',
       json: true,
       // headers: { contractName: contractName },
       body: { contractName }, // no body; uses url param
@@ -54,7 +52,7 @@ async function getContractInterface(contractName) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/metadata/contractInterface`,
-      method: "GET",
+      method: 'GET',
       json: true,
       // headers: { contractName: contractName },
       body: { contractName },
@@ -74,7 +72,7 @@ async function getContractAddress(contractName) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/metadata/contractAddress`,
-      method: "GET",
+      method: 'GET',
       json: true,
       // headers: { contractName: contractName },
       body: { contractName },
@@ -91,7 +89,7 @@ async function postInterface(contractName, contractInterface) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/metadata/contractInterface`,
-      method: "POST",
+      method: 'POST',
       json: true,
       // headers: { contractName: contractName }, // lowercase keys for headers
       body: { contractName, contractInterface },
@@ -116,29 +114,21 @@ const postContractInterfacePollingFunction = async (args) => {
     return true;
   } catch (err) {
     console.log(
-      `Got a polling error "${err}", but that might be because the external server missed our call - we'll poll again...`
+      `Got a polling error "${err}", but that might be because the external server missed our call - we'll poll again...`,
     );
     return false;
   }
 };
 
 async function postContractInterface(contractName, contractInterface) {
-  console.log(
-    "\nPosting the contract interface to the merkle-tree microservice..."
-  );
+  console.log('\nPosting the contract interface to the merkle-tree microservice...');
   try {
-    await utilsPoll.poll(
-      postContractInterfacePollingFunction,
-      config.POLLING_FREQUENCY,
-      {
-        contractName,
-        contractInterface,
-      }
-    );
+    await utilsPoll.poll(postContractInterfacePollingFunction, config.POLLING_FREQUENCY, {
+      contractName,
+      contractInterface,
+    });
   } catch (err) {
-    throw new Error(
-      "Could not post the contract interface to the merkle-tree microservice"
-    );
+    throw new Error('Could not post the contract interface to the merkle-tree microservice');
   }
 }
 
@@ -147,7 +137,7 @@ async function postAddress(contractName, contractAddress) {
   return new Promise((resolve, reject) => {
     const options = {
       url: `${url}/metadata/contractAddress`,
-      method: "POST",
+      method: 'POST',
       json: true,
       // headers: { contractName: contractName }, // lowercase keys for headers
       body: { contractName, contractAddress },
@@ -172,29 +162,21 @@ const postContractAddressPollingFunction = async (args) => {
     return true;
   } catch (err) {
     console.log(
-      `Got a polling error "${err}", but that might be because the external server missed our call - we'll poll again...`
+      `Got a polling error "${err}", but that might be because the external server missed our call - we'll poll again...`,
     );
     return false;
   }
 };
 
 async function postContractAddress(contractName, contractAddress) {
-  console.log(
-    "\nPosting the contract interface to the merkle-tree microservice..."
-  );
+  console.log('\nPosting the contract interface to the merkle-tree microservice...');
   try {
-    await utilsPoll.poll(
-      postContractAddressPollingFunction,
-      config.POLLING_FREQUENCY,
-      {
-        contractName,
-        contractAddress,
-      }
-    );
+    await utilsPoll.poll(postContractAddressPollingFunction, config.POLLING_FREQUENCY, {
+      contractName,
+      contractAddress,
+    });
   } catch (err) {
-    throw new Error(
-      "Could not post the contract address to the merkle-tree microservice"
-    );
+    throw new Error('Could not post the contract address to the merkle-tree microservice');
   }
 }
 
